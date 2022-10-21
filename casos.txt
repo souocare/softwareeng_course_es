@@ -1,0 +1,19 @@
+
+carregar mensagem
+editar mensagem
+gerir acessos de logins
+carremgamentos de SMS
+
+gerar um uma campanha
+gerar um envio 
+carregar contactos
+editar contactos 
+criar grupo de contactos
+gerar estatisticas 
+
+
+---
+LINKS
+https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.es%2Fvector-premium%2Fmano-que-sostiene-telefono-inteligente-notificacion-mensaje-nuevo-simbolo-pantalla-telefono_13070822.htm&psig=AOvVaw3cAESd5JkkFSgxTNdmV_S6&ust=1665614626793000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCICMhZOg2foCFQAAAAAdAAAAABAK
+
+https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.googleappsscript.org%2Fcontacts-services%2Fdisplay-contacts-in-a-table&psig=AOvVaw3lTF5UOJptN0sosNC-722B&ust=1665615222075000&source=images&cd=vfe&ved=0CA0QjhxqFwoTCLi5666i2foCFQAAAAAdAAAAABAE
