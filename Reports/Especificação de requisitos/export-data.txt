@@ -1,0 +1,7 @@
+%0 Web Page
+%T Campanha de email - Definição
+%U https://sendpulse.com/br/support/glossary/email-campaign
+%X Descubra o que é "Campanha de email" no glossário do SendPulse. Temos definições para todos os termos de marketing por e-mail ... e um PLANO GRATUITO para suas campanhas de e-mail!
+%G en-gb
+%B SendPulse
+
