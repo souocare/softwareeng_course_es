@@ -1,0 +1,197 @@
+﻿
+@{ ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<!-- slider_area_end -->
+<!-- about_area_start -->
+<div style="margin-top:20px;">
+    <div>
+        <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-12" style="padding-left: 10px;">
+                    <a href="@Url.Action("ImportContacts", "Home", null)" style="text-decoration:none;">
+                        <img src="~/Images/AddNew.png" style="width: 30px;" /> <span style="color:#E10028;">Import Contacts</span>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("MyContacts", "Home", null)" style="text-decoration:none;">
+                        <img src="~/Images/MyLists.png" style="width: 30px;" /> <span style="color:#999999;">My Lists</span>
+                    </a>
+                    <br /><br />
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-2">
+
+                    <p style="color:#E10028;">Import Contacts</p>
+                </div>
+                <div class="col-md-10">
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+                <div class="col-md-6 col-sm-5">
+
+                    <form action="ImportContactsFiles" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" name="myform" id="myform">
+
+
+                        <label for="fileee" style="font-size:14px">&#128193; Please, load the excel file.</label>
+                        <input type="file" name="fileee" id="fileee" onchange="getFileNameWithExt(event)" size="100" />
+
+                        <br />
+
+                        <label for="updatedatauser" style="font-size:14px">Update data on existing users?</label>
+                        <input type="checkbox" name="updatedatauser" id="updatedatauser" size="40" checked="checked" value="true" onchange="if(this.checked) document.getElementById('updatedatausertext').value='true'; else document.getElementById('updatedatausertext').value='false';" />
+
+                        <input type="text" name="updatedatausertext" id="updatedatausertext" style="display:none;" value="true" />
+
+                        <br /><br />
+
+                        <label for="createrecipient_quest" style="font-size:14px">Do you want to create a recipient list with the uploaded list?</label>
+                        <input type="checkbox" name="createrecipient_quest" id="createrecipient_quest" size="40" checked="checked" value="false" onchange="createlistgetname()" />
+
+
+                        <input type="text" name="createrecipient_text" id="createrecipient_text" style="display:block;" value="" />
+                        <input type="text" name="createrecipient_bool" id="createrecipient_bool" style="display:none;" value="false" />
+
+
+                        <br /><br />
+                        <hr />
+
+                        <div id="fielddelimiterdiv" style="display: none">
+                            <label for="fielddelimiter">Choose the field delimiter:</label>
+
+                            <select name="fielddelimiter" id="fielddelimiter">
+                                <option value="Comma">Comma (,)</option>
+                                <option value="Semicolon">Semicolon  (;)</option>
+                                <option value="Tab">Tab</option>
+                            </select>
+
+                        </div>
+
+                        <br /><br />
+
+                        <div id="typeofencodingdiv" style="display: none">
+                            <label for="typeofencoding">Choose the type of encoding:</label>
+
+                            <select name="typeofencoding" id="typeofencoding">
+                                <option value="utf8">UTF-8</option>
+                            </select>
+
+                        </div>
+
+                        <br /><br />
+
+                        <input type="submit" class="btn btn-primary btn-block btn-lg" value="Submit" />
+                    </form>
+
+
+
+                </div>
+
+
+                <div class="col-md-5 col-sm-7">
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+            <div class="row">
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+                <div class="col-md-6 col-sm-5">
+                    <br /><br /><hr /><br /><br />Import contacts manually:<br />
+                    <form action="ImportContactUnique" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" name="myform" id="myform">
+                        @foreach (var field in ViewBag.Systemfields)
+                        {
+                        <label for="@field[0]" style="font-size:14px">@field[0]</label>
+                            <input type="@field[1]" name="@field[0]" size="50" />
+
+                        <br /><br />
+                        }
+
+
+                        <br /><br />
+
+                        <input type="submit" class="btn btn-primary btn-block btn-lg" value="Submit" />
+                    </form>
+
+
+
+                </div>
+
+
+                <div class="col-md-5 col-sm-7">
+
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+
+    </div>
+</div>
+<!-- about_area_end -->
+<br />
+<br />
+
+<script>
+
+
+
+    function getFileNameWithExt(event) {
+        if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+            return;
+        }
+        const name = event.target.files[0].name;
+        const lastDot = name.lastIndexOf('.');
+
+        const ext = name.substring(lastDot + 1);
+        if (ext == "csv" || ext == "txt") {
+            document.getElementById("fielddelimiterdiv").style.display = "block";
+            document.getElementById("typeofencodingdiv").style.display = "block";
+        }
+
+
+    }
+
+
+    function createlistgetname() {
+        if (document.getElementById('createrecipient_quest').checked) {
+            document.getElementById("createrecipient_text").style.display = 'block';
+            document.getElementById("createrecipient_text").required = true;
+            document.getElementById('createrecipient_bool').value = 'true';
+        } else {
+            document.getElementById("createrecipient_text").style.display = 'none';
+            document.getElementById("createrecipient_text").required = false;
+            document.getElementById('createrecipient_bool').value = 'false';
+        }
+
+
+    }
+
+</script>

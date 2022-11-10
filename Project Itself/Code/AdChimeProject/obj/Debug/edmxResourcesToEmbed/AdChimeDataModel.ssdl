@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AdChimeProejctModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="panelContacts">
+    <Key>
+      <PropertyRef Name="idContact" />
+    </Key>
+    <Property Name="idContact" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="LastName" Type="varchar" MaxLength="100" />
+    <Property Name="bActive" Type="bit" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
+    <Property Name="CountryCodePhone" Type="varchar" MaxLength="20" />
+    <Property Name="Country" Type="varchar" MaxLength="100" />
+    <Property Name="optinSMS" Type="int" />
+    <Property Name="created_at" Type="datetime" />
+    <Property Name="updatedate" Type="datetime" />
+    <Property Name="updatedbyuser" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="panelContactsVariables">
+    <Key>
+      <PropertyRef Name="idlig" />
+    </Key>
+    <Property Name="idlig" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idContact" Type="int" />
+    <Property Name="idVar" Type="int" />
+    <Property Name="sValue" Type="varchar(max)" />
+    <Property Name="insertdate" Type="datetime" />
+    <Property Name="updatedate" Type="datetime" />
+    <Property Name="updatedbyuser" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tCampaign">
+    <Key>
+      <PropertyRef Name="idcampaign" />
+    </Key>
+    <Property Name="idcampaign" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TitleCampaing" Type="varchar" MaxLength="100" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="Sender" Type="varchar" MaxLength="100" />
+    <Property Name="Text" Type="varchar" MaxLength="159" />
+    <Property Name="idtemplate" Type="int" />
+    <Property Name="idrecipient" Type="int" />
+    <Property Name="sendDate" Type="datetime" />
+    <Property Name="insertdate" Type="datetime" />
+    <Property Name="updatedate" Type="datetime" />
+    <Property Name="updatedbyuser" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tCampaignSend">
+    <Key>
+      <PropertyRef Name="idEnvioEmail" />
+    </Key>
+    <Property Name="idEnvioEmail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idcampaing" Type="int" />
+    <Property Name="tEmailtoGroup" Type="varchar" MaxLength="100" />
+    <Property Name="idrecipient" Type="int" />
+    <Property Name="bSucess" Type="bit" />
+    <Property Name="nEnvio" Type="int" />
+    <Property Name="sDatetoSend" Type="datetime" />
+    <Property Name="sSendbyWho" Type="varchar" MaxLength="100" />
+    <Property Name="insertdate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tRecipientNumbers">
+    <Key>
+      <PropertyRef Name="idrecipientnumber" />
+    </Key>
+    <Property Name="idrecipientnumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idrecipient" Type="int" />
+    <Property Name="idContact" Type="int" />
+    <Property Name="insertdate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tRecipientSms">
+    <Key>
+      <PropertyRef Name="idrecipient" />
+    </Key>
+    <Property Name="idrecipient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TitleRecipient" Type="varchar" MaxLength="100" />
+    <Property Name="NumberOfRecords" Type="int" />
+    <Property Name="insertdate" Type="datetime" />
+    <Property Name="updatedate" Type="datetime" />
+    <Property Name="updatedbyuser" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tTemplateSms">
+    <Key>
+      <PropertyRef Name="idtemplate" />
+    </Key>
+    <Property Name="idtemplate" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="100" />
+    <Property Name="Text" Type="varchar(max)" />
+    <Property Name="isaproved" Type="bit" Nullable="false" />
+    <Property Name="insertdate" Type="datetime" />
+    <Property Name="updatedate" Type="datetime" />
+    <Property Name="updatedbyuser" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tUsers">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="idUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="Password" Type="nvarchar(max)" />
+    <Property Name="iDLogin" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="tVarContacts">
+    <Key>
+      <PropertyRef Name="idVar" />
+    </Key>
+    <Property Name="idVar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="visible" Type="bit" />
+    <Property Name="VarName" Type="varchar" MaxLength="255" />
+    <Property Name="colNumber" Type="int" />
+    <Property Name="colTypeType" Type="varchar" MaxLength="50" />
+    <Property Name="colTypeFilter" Type="varchar" MaxLength="50" />
+    <Property Name="insertdate" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_panelContactsVariables_panelContacts">
+    <End Role="panelContacts" Type="Self.panelContacts" Multiplicity="0..1" />
+    <End Role="panelContactsVariables" Type="Self.panelContactsVariables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="panelContacts">
+        <PropertyRef Name="idContact" />
+      </Principal>
+      <Dependent Role="panelContactsVariables">
+        <PropertyRef Name="idContact" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_panelContactsVariables_tVarContacts">
+    <End Role="tVarContacts" Type="Self.tVarContacts" Multiplicity="0..1" />
+    <End Role="panelContactsVariables" Type="Self.panelContactsVariables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tVarContacts">
+        <PropertyRef Name="idVar" />
+      </Principal>
+      <Dependent Role="panelContactsVariables">
+        <PropertyRef Name="idVar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tCampaign_tRecipientSms">
+    <End Role="tRecipientSms" Type="Self.tRecipientSms" Multiplicity="0..1" />
+    <End Role="tCampaign" Type="Self.tCampaign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tRecipientSms">
+        <PropertyRef Name="idrecipient" />
+      </Principal>
+      <Dependent Role="tCampaign">
+        <PropertyRef Name="idrecipient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tCampaign_tTemplateSms">
+    <End Role="tTemplateSms" Type="Self.tTemplateSms" Multiplicity="0..1" />
+    <End Role="tCampaign" Type="Self.tCampaign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tTemplateSms">
+        <PropertyRef Name="idtemplate" />
+      </Principal>
+      <Dependent Role="tCampaign">
+        <PropertyRef Name="idtemplate" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tCampaignSend_tCampaign">
+    <End Role="tCampaign" Type="Self.tCampaign" Multiplicity="0..1" />
+    <End Role="tCampaignSend" Type="Self.tCampaignSend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tCampaign">
+        <PropertyRef Name="idcampaign" />
+      </Principal>
+      <Dependent Role="tCampaignSend">
+        <PropertyRef Name="idcampaing" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tCampaignSend_tRecipientSms">
+    <End Role="tRecipientSms" Type="Self.tRecipientSms" Multiplicity="0..1" />
+    <End Role="tCampaignSend" Type="Self.tCampaignSend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tRecipientSms">
+        <PropertyRef Name="idrecipient" />
+      </Principal>
+      <Dependent Role="tCampaignSend">
+        <PropertyRef Name="idrecipient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tRecipientNumbers_panelContacts">
+    <End Role="panelContacts" Type="Self.panelContacts" Multiplicity="0..1" />
+    <End Role="tRecipientNumbers" Type="Self.tRecipientNumbers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="panelContacts">
+        <PropertyRef Name="idContact" />
+      </Principal>
+      <Dependent Role="tRecipientNumbers">
+        <PropertyRef Name="idContact" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tRecipientNumbers_tRecipientSms">
+    <End Role="tRecipientSms" Type="Self.tRecipientSms" Multiplicity="0..1" />
+    <End Role="tRecipientNumbers" Type="Self.tRecipientNumbers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tRecipientSms">
+        <PropertyRef Name="idrecipient" />
+      </Principal>
+      <Dependent Role="tRecipientNumbers">
+        <PropertyRef Name="idrecipient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AdChimeProejctModelStoreContainer">
+    <EntitySet Name="panelContacts" EntityType="Self.panelContacts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="panelContactsVariables" EntityType="Self.panelContactsVariables" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tCampaign" EntityType="Self.tCampaign" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tCampaignSend" EntityType="Self.tCampaignSend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tRecipientNumbers" EntityType="Self.tRecipientNumbers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tRecipientSms" EntityType="Self.tRecipientSms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tTemplateSms" EntityType="Self.tTemplateSms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tUsers" EntityType="Self.tUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tVarContacts" EntityType="Self.tVarContacts" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_panelContactsVariables_panelContacts" Association="Self.FK_panelContactsVariables_panelContacts">
+      <End Role="panelContacts" EntitySet="panelContacts" />
+      <End Role="panelContactsVariables" EntitySet="panelContactsVariables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_panelContactsVariables_tVarContacts" Association="Self.FK_panelContactsVariables_tVarContacts">
+      <End Role="tVarContacts" EntitySet="tVarContacts" />
+      <End Role="panelContactsVariables" EntitySet="panelContactsVariables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tCampaign_tRecipientSms" Association="Self.FK_tCampaign_tRecipientSms">
+      <End Role="tRecipientSms" EntitySet="tRecipientSms" />
+      <End Role="tCampaign" EntitySet="tCampaign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tCampaign_tTemplateSms" Association="Self.FK_tCampaign_tTemplateSms">
+      <End Role="tTemplateSms" EntitySet="tTemplateSms" />
+      <End Role="tCampaign" EntitySet="tCampaign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tCampaignSend_tCampaign" Association="Self.FK_tCampaignSend_tCampaign">
+      <End Role="tCampaign" EntitySet="tCampaign" />
+      <End Role="tCampaignSend" EntitySet="tCampaignSend" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tCampaignSend_tRecipientSms" Association="Self.FK_tCampaignSend_tRecipientSms">
+      <End Role="tRecipientSms" EntitySet="tRecipientSms" />
+      <End Role="tCampaignSend" EntitySet="tCampaignSend" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tRecipientNumbers_panelContacts" Association="Self.FK_tRecipientNumbers_panelContacts">
+      <End Role="panelContacts" EntitySet="panelContacts" />
+      <End Role="tRecipientNumbers" EntitySet="tRecipientNumbers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tRecipientNumbers_tRecipientSms" Association="Self.FK_tRecipientNumbers_tRecipientSms">
+      <End Role="tRecipientSms" EntitySet="tRecipientSms" />
+      <End Role="tRecipientNumbers" EntitySet="tRecipientNumbers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

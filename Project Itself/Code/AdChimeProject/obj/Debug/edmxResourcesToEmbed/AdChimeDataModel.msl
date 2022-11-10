@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AdChimeProejctModelStoreContainer" CdmEntityContainer="AdChimeProejctEntities">
+    <EntitySetMapping Name="panelContacts">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.panelContact">
+        <MappingFragment StoreEntitySet="panelContacts">
+          <ScalarProperty Name="idContact" ColumnName="idContact" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="bActive" ColumnName="bActive" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="CountryCodePhone" ColumnName="CountryCodePhone" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="optinSMS" ColumnName="optinSMS" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+          <ScalarProperty Name="updatedbyuser" ColumnName="updatedbyuser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="panelContactsVariables">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.panelContactsVariable">
+        <MappingFragment StoreEntitySet="panelContactsVariables">
+          <ScalarProperty Name="idlig" ColumnName="idlig" />
+          <ScalarProperty Name="idContact" ColumnName="idContact" />
+          <ScalarProperty Name="idVar" ColumnName="idVar" />
+          <ScalarProperty Name="sValue" ColumnName="sValue" />
+          <ScalarProperty Name="insertdate" ColumnName="insertdate" />
+          <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+          <ScalarProperty Name="updatedbyuser" ColumnName="updatedbyuser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tCampaigns">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.tCampaign">
+        <MappingFragment StoreEntitySet="tCampaign">
+          <ScalarProperty Name="idcampaign" ColumnName="idcampaign" />
+          <ScalarProperty Name="TitleCampaing" ColumnName="TitleCampaing" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Sender" ColumnName="Sender" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="idtemplate" ColumnName="idtemplate" />
+          <ScalarProperty Name="idrecipient" ColumnName="idrecipient" />
+          <ScalarProperty Name="sendDate" ColumnName="sendDate" />
+          <ScalarProperty Name="insertdate" ColumnName="insertdate" />
+          <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+          <ScalarProperty Name="updatedbyuser" ColumnName="updatedbyuser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tCampaignSends">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.tCampaignSend">
+        <MappingFragment StoreEntitySet="tCampaignSend">
+          <ScalarProperty Name="idEnvioEmail" ColumnName="idEnvioEmail" />
+          <ScalarProperty Name="idcampaing" ColumnName="idcampaing" />
+          <ScalarProperty Name="tEmailtoGroup" ColumnName="tEmailtoGroup" />
+          <ScalarProperty Name="idrecipient" ColumnName="idrecipient" />
+          <ScalarProperty Name="bSucess" ColumnName="bSucess" />
+          <ScalarProperty Name="nEnvio" ColumnName="nEnvio" />
+          <ScalarProperty Name="sDatetoSend" ColumnName="sDatetoSend" />
+          <ScalarProperty Name="sSendbyWho" ColumnName="sSendbyWho" />
+          <ScalarProperty Name="insertdate" ColumnName="insertdate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tRecipientNumbers">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.tRecipientNumber">
+        <MappingFragment StoreEntitySet="tRecipientNumbers">
+          <ScalarProperty Name="idrecipientnumber" ColumnName="idrecipientnumber" />
+          <ScalarProperty Name="idrecipient" ColumnName="idrecipient" />
+          <ScalarProperty Name="idContact" ColumnName="idContact" />
+          <ScalarProperty Name="insertdate" ColumnName="insertdate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tRecipientSms">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.tRecipientSm">
+        <MappingFragment StoreEntitySet="tRecipientSms">
+          <ScalarProperty Name="idrecipient" ColumnName="idrecipient" />
+          <ScalarProperty Name="TitleRecipient" ColumnName="TitleRecipient" />
+          <ScalarProperty Name="NumberOfRecords" ColumnName="NumberOfRecords" />
+          <ScalarProperty Name="insertdate" ColumnName="insertdate" />
+          <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+          <ScalarProperty Name="updatedbyuser" ColumnName="updatedbyuser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tTemplateSms">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.tTemplateSm">
+        <MappingFragment StoreEntitySet="tTemplateSms">
+          <ScalarProperty Name="idtemplate" ColumnName="idtemplate" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="isaproved" ColumnName="isaproved" />
+          <ScalarProperty Name="insertdate" ColumnName="insertdate" />
+          <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+          <ScalarProperty Name="updatedbyuser" ColumnName="updatedbyuser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tUsers">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.tUser">
+        <MappingFragment StoreEntitySet="tUsers">
+          <ScalarProperty Name="iDLogin" ColumnName="iDLogin" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tVarContacts">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.tVarContact">
+        <MappingFragment StoreEntitySet="tVarContacts">
+          <ScalarProperty Name="insertdate" ColumnName="insertdate" />
+          <ScalarProperty Name="colTypeFilter" ColumnName="colTypeFilter" />
+          <ScalarProperty Name="colTypeType" ColumnName="colTypeType" />
+          <ScalarProperty Name="colNumber" ColumnName="colNumber" />
+          <ScalarProperty Name="VarName" ColumnName="VarName" />
+          <ScalarProperty Name="visible" ColumnName="visible" />
+          <ScalarProperty Name="idVar" ColumnName="idVar" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

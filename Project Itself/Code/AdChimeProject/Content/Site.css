@@ -1,12 +1,17 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    /*padding-top: 50px;
+    padding-bottom: 20px;*/
+    background-color: rgba(204, 204, 204, 0.28);
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    background-color: #ffffff;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -16,9 +21,175 @@
     white-space: normal;
 }
 
+.container .body-content .jumbotron {
+    margin-top: 20px !important;
+}
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
-    max-width: 280px;
+    /*max-width: 280px;
+}*/
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.vertical-align {
+    vertical-align: bottom;
+}
+
+.navbar-inverse {
+    background-color: #ffffff;
+}
+
+@media only screen and (min-width : 481px) {
+    .row.equal-height {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .row.equal-height > [class*='col-'] {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .row.equal-height.row:after,
+        .row.equal-height.row:before {
+            display: flex;
+        }
+
+        .row.equal-height > [class*='col-'] > .thumbnail,
+        .row.equal-height > [class*='col-'] > .thumbnail > .caption {
+            display: flex;
+            flex: 1 0 auto;
+            flex-direction: column;
+        }
+
+            .row.equal-height > [class*='col-'] > .thumbnail > .caption > .flex-text {
+                flex-grow: 1;
+            }
+
+            .row.equal-height > [class*='col-'] > .thumbnail > img {
+                width: 100%;
+                height: 200px; /* force image's height */
+                /* force image fit inside it's "box" */
+                -webkit-object-fit: cover;
+                -moz-object-fit: cover;
+                -ms-object-fit: cover;
+                -o-object-fit: cover;
+                object-fit: cover;
+            }
+}
+
+.validation-summary-errors ul {
+    list-style: none;
+    margin-left: -40px
+}
+
+.radio-inline change {
+    background-color: red;
+}
+
+@media screen and (min-width: 768px) {
+    .jumbotron {
+        margin-top: 20px;
+    }
+
+    .container .jumbotron,
+    .container-fluid .jumbotron {
+        margin-top: 20px;
+    }
+}
+
+.jumbotron h1, .jumbotron .h1 {
+    color: black;
+    background-color: rgba(255,255,255,0.5);
+}
+
+.fa {
+    color: yellow !important;
+    -webkit-text-stroke-width: 1px !important;
+    -webkit-text-stroke-color: orange !important;
+}
+
+footer {
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 100px;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    box-sizing: border-box;
+    border-color: #080808;
+    border-top-style: solid;
+    border-width: 1px 0 0;
+    background-color: grey;
+}
+
+.copyright-section {
+    padding: 15px 0;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    border-top: 1px solid rgba(255,255,255,.06);
+}
+
+    .copyright-section p {
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+ul.footer-nav {
+    float: right;
+}
+
+    ul.footer-nav li {
+        display: inline-block;
+        /*float: left;*/
+        margin-left: 15px;
+    }
+
+        ul.footer-nav li:first-child {
+            margin-left: 0;
+        }
+
+        ul.footer-nav li a {
+            display: inline-block;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            -webkit-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+        }
+
+            ul.footer-nav li a:hover {
+                color: #fff;
+            }
+
+.form-horizontal {
+    background-color: rgba(204, 204, 204, 0.28);
+}
+
+div.container.body-content hr.style-one {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+    background-image: -moz-linear-gradient(left, #ccc, #333, #ccc);
+    background-image: -ms-linear-gradient(left, #ccc, #333, #ccc);
+    background-image: -o-linear-gradient(left, #ccc, #333, #ccc);
+}
+#bg-video {
+    min-width: 100%;
+    min-height: 100vh;
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: cover;
+    z-index: -1;
 }

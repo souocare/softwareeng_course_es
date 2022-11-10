@@ -1,0 +1,126 @@
+﻿@using AdChimeProject.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+
+<head>
+    <style>
+        .formulariologin {
+            padding-top: 10px;
+        }
+
+        ::-webkit-input-placeholder {
+            color: red;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+            color: red;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: red;
+        }
+
+        :-ms-input-placeholder {
+            color: red;
+        }
+
+
+        .btncls {
+            background-color: #3A4F5E;
+            border: #2e6da4;
+            font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            color: #fff;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            border-radius: 4px;
+            line-height: 1.5;
+            text-decoration: none;
+            /*Transition*/
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+        }
+
+            .btncls:hover {
+                background-color: #87A2B6;
+                border: #2e6da4;
+                font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+                font-size: 15px;
+                color: #000;
+                letter-spacing: 1px;
+                padding: 8px 12px;
+                font-size: 14px;
+                font-weight: normal;
+                border-radius: 4px;
+                line-height: 1.5;
+                text-decoration: none;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="padding-top: 15%;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: #999999;">
+                <div class="modal-body" style="padding-top: 0px; padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">
+                    <div class="row">
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-10">
+                            <p style="color:white;">
+                                <br /><strong>Welcome to AdChime SMS Approved platform. <br />Please, enter your credentials.</strong>
+                            </p>
+
+
+                            <div class="formulariologin">
+                                @using (Html.BeginForm("Login", "Homw", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @autocomplete = "off", @placeholder = "Username", @name = "username", @style = "height: 40px;" })
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "alert alert-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @autocomplete = "off", @placeholder = "Password", @name = "password", @style = "height: 40px;" })
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "alert alert-error" })
+                                    </div>
+                                    <div style="text-align:center;">
+                                        <input type="submit" class="btn btn-primary btn-block btn-lg inpp" style="background-color: #E10028; border-color:#E10028; font-size: 18px; padding-top: 10px; padding-bottom: 10px; width: 30%; margin: auto; display: block;" value="Enter">
+                                    </div>
+                                    <div style="text-align:center;">
+                                        <br /><br />
+                                    </div>
+                                }
+                            </div>
+
+                            
+                        </div>
+                        <div class="col-md-1">
+                            <span onclick="$('#modal').modal('hide');" class="w3-button w3-display-topright" style="font-size: 20px;color: white;">
+                                X
+                            </span>
+                        </div>
+                    </div>
+
+                    
+
+
+                </div><!-- /.modal-content -->
+
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+</body>
+

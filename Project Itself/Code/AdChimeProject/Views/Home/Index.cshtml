@@ -1,31 +1,91 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@{ ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutLogout.cshtml"; }
+
+
+<div style="margin-top:40px;">
+    <div class="row">
+        <div class="col-md-1">
+
+
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-6">
+                    <div style="background-color: rgba(255, 255, 255, 0.6); position: relative; top: 30%; ">
+                        <p style="padding-left: 10px; padding-right: 10px; font-size:28px; line-height:20px;color:#999999; line-height:1.1 ">
+                            <span style="color:#E10028">AdChime</span><br />
+                            APPROVED SMS
+                        </p>
+                        <p style="padding-left: 10px; padding-right: 10px; font-size:22px; line-height:20px;color:#999999;  line-height:1.1">
+                            The APPROVED SMS platform allows you to send,
+                            both individually or massively, SMS to HCPs of
+                            your target.
+                        </p>
+                        <p style=" padding-left: 10px; padding-right: 10px;font-size:20px; line-height:20px;color:black; ">
+                            <br />
+                            <button class="enterplatformmainpage">ENTER PLATFORM</button>
+                        </p>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+
+                    <img src="~/Content/Images/MainPage.png" />
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="col-md-1">
+
+
+        </div>
+
+    </div>
+</div>
+<!-- about_area_end -->
+<br />
+<br />
+
+<div id="modal" class="modal fade" data-backdrop="false" role="dialog" style="margin-top: 0px; background-color: rgba(239, 122, 143, 0.7);/*! opacity: 0.5; */" />
+
+
+
+@section scripts{
+    <script>window.onload = function () {
+            $('.modal-backdrop').remove();
+        }</script>
+    <script>
+        window.addEventListener('click', function (event) {
+            if (event.target.id == "modal") {
+                $('#modal').modal('hide');
+            }
+        });
+
+
+        $(function () {
+
+
+            $(".loginbutton").click(function () {
+
+                $("#modal").load("/Home/Login", function () {
+                    $("#modal").modal();
+                })
+
+
+            });
+
+            $(".enterplatformmainpage").click(function () {
+
+                $("#modal").load("/Home/Login", function () {
+                    $("#modal").modal();
+                })
+
+
+            });
+
+        })
+    </script>
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>

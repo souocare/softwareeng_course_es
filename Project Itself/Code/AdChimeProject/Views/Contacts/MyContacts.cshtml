@@ -1,0 +1,232 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using AdChimeProject;
+@model IPagedList<AdChimeProject.panelContact>
+
+@{ ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<!-- slider_area_end -->
+<!-- about_area_start -->
+<div style="margin-top:20px;">
+    <div>
+        <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-12" style="padding-left: 10px;">
+                    <a href="@Url.Action("ImportContacts", "Home", null)" style="text-decoration:none;">
+                        <img src="~/Content/Images/AddNew.png" style="width: 30px;" /> <span style="color:#999999;">Import Contacts</span>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("MyContacts", "Home", null)" style="text-decoration:none;">
+                        <img src="~/Content/Images/MyLists.png" style="width: 30px;" /> <span style="color:#E10028;">My Contacts</span>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <button class="newlista" style="background: none !important; border: none; padding: 0 !important;">
+                        <img src="~/Content/Images/mylistscreatecontacts.png" style="width: 30px;" /> <span style="color:#999999;">Create NEW list</span>
+                    </button>
+
+                    <br /><br />
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-2">
+
+                    <p style="color:#E10028;">My contacts</p>
+                </div>
+                <div class="col-md-8" style="text-align: center;">
+                    @if (ViewBag.insertedcontacts != null)
+                    {
+                        <p style="font-size:16px; font-weight:bold; color:red;">@ViewBag.insertedcontacts</p>
+                    }
+                </div>
+                <div class="col-md-2">
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+
+
+                <div class="col-md-10 col-sm-12">
+                    <table class="table" style="  width: 100%;border-radius: 10px;overflow: hidden;">
+                        <tr style="background-color:#CC0033;color: white;">
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Phone Number
+                            </th>
+                            <th>
+                                Country
+                            </th>
+                            @foreach (var col in ViewBag.Colunas)
+                            {
+                                <th>
+                                    @col
+                                </th>
+                            }
+                        </tr>
+                        @{ var counter = 1; }
+                        @foreach (var item in Model)
+                        {
+                            if (counter % 2 == 0)
+                            {
+                                <tr style="background-color: #f5f5f5; ">
+                                    <td style="word-break:break-all;">
+                                        @{
+                                            var fullName = item.Name + " " + item.LastName;
+                                            @Html.DisplayFor(modelItem => fullName)
+                                        }
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        @{
+                                            var phonenumber = item.CountryCodePhone + " " + item.PhoneNumber;
+                                            @Html.DisplayFor(modelItem => phonenumber)
+                                        }
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        @Html.DisplayFor(modelItem => item.Country)
+                                    </td>
+                                    @foreach (var valcol in ViewBag.Colunas)
+                                    {
+                                        var variable = item.panelContactsVariables.Where(x => x.tVarContact.VarName == valcol).Select(x => x.sValue).FirstOrDefault();
+                                        if (variable == null)
+                                        {
+                                            <td style="word-break:break-all;">
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td style="word-break:break-all;">
+                                                @{
+                                                    @Html.DisplayFor(modelItem => variable)
+                                                }
+                                            </td>
+                                        }
+
+                                    }
+                                </tr>
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td style="word-break:break-all; ">
+                                        @{
+                                            var fullName = item.Name + " " + item.LastName;
+                                            @Html.DisplayFor(modelItem => fullName)
+                                        }
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        @{
+                                            var phonenumber = item.CountryCodePhone + " " + item.PhoneNumber;
+                                            @Html.DisplayFor(modelItem => phonenumber)
+                                        }
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        @Html.DisplayFor(modelItem => item.Country)
+                                    </td>
+                                    @foreach (var valcol in ViewBag.Colunas)
+                                    {
+                                        var variable = item.panelContactsVariables.Where(x => x.tVarContact.VarName == valcol).Select(x => x.sValue).FirstOrDefault();
+                                        if (variable == null)
+                                        {
+                                            <td style="word-break:break-all;">
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td style="word-break:break-all;">
+                                                @{
+                                                    @Html.DisplayFor(modelItem => variable)
+                                                }
+                                            </td>
+                                        }
+
+                                    }
+                                </tr>
+                            }
+
+                            counter++;
+                        }
+
+                    </table>
+                    <br />
+                    @Html.PagedListPager(Model, page => Url.Action("MyContacts", new { page, recipient = @ViewBag.Listaselected }))
+
+
+                </div>
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<!-- about_area_end -->
+<br />
+<br />
+
+<div id="modaladdnewlist" class="modal fade" data-backdrop="false" role="dialog" style="margin-top: 0px; background-color: rgba(239, 122, 143, 0.7);/*! opacity: 0.5; */" />
+
+
+@section scripts{
+    <script>
+            window.onload = function () {
+            $('.modal-backdrop').remove();
+        }</script>
+
+
+
+    <script>
+        window.addEventListener('click', function (event) {
+            if (event.target.id == "modaladdnewlist") {
+                $("#modaladdnewlist").hide();
+                $('#modaladdnewlist').modal('hide');
+                $("#modaladdnewlist").removeClass("show");
+                $("#modaladdnewlist").css("display", "none");
+
+            }
+        });
+
+
+
+        $(function () {
+
+
+            $(".newlista").click(function () {
+
+                $("#modaladdnewlist").load("/Home/NewList", function () {
+                    $("#modaladdnewlist").modal();
+
+                    $("#modaladdnewlist").addClass("show");
+                    $("#modaladdnewlist").css("display", "block");
+                })
+
+
+            });
+
+
+
+        })
+
+    </script>
+
+}
