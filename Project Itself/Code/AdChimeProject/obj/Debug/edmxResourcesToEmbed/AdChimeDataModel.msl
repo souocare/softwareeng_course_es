@@ -101,6 +101,7 @@
     <EntitySetMapping Name="tUsers">
       <EntityTypeMapping TypeName="AdChimeProejctModel.tUser">
         <MappingFragment StoreEntitySet="tUsers">
+          <ScalarProperty Name="isadmin" ColumnName="isadmin" />
           <ScalarProperty Name="iDLogin" ColumnName="iDLogin" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Email" ColumnName="Email" />

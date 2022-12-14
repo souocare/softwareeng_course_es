@@ -241,6 +241,7 @@
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="iDLogin" Type="Guid" />
+    <Property Name="isadmin" Type="Boolean" />
   </EntityType>
   <EntityType Name="tVarContact">
     <Key>

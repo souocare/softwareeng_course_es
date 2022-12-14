@@ -1,0 +1,200 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<AdChimeProject.tCampaign>
+
+@{ ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<!-- slider_area_end -->
+<!-- about_area_start -->
+<div style="margin-top:20px;">
+    <div>
+        <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-12" style="padding-left: 10px;">
+                    <a href="@Url.Action("NewCampaign", "Home", null)" style="text-decoration:none;">
+                        <img src="~/Images/AddNew.png" style="width: 30px;" /> <span style="color:#999999;">Create NEW Campaign</span>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("MyCampaigns", "Home", null)" style="text-decoration:none;">
+                        <img src="~/Images/MyLists.png" style="width: 30px;" /> <span style="color:#E10028;">My Campaigns</span>
+                    </a>
+                    <br /><br />
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-2">
+
+                    <p style="color:#E10028;">Campaigns</p>
+                </div>
+                <div class="col-md-10">
+
+                </div>
+
+            </div>
+
+
+
+
+            <div class="row">
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+                <div class="col-md-10 col-sm-12">
+
+                    <table class="table" style="  width: 100%;border-radius: 10px;overflow: hidden;">
+                        <tr style="background-color:#CC0033;color: white;">
+                            <th style="width: 12%; padding-left: 40px; border-top: 0px;">
+                                Title Campaing
+                            </th>
+                            <th style="width: 30%; border-top: 0px;">
+                                Description
+                            </th>
+                            <th style="width: 12%; border-top: 0px;">
+                                Sender
+                            </th>
+                            <th style="width: 39%; border-top: 0px;">
+                                Text
+                            </th>
+                            <th style="width: 8%; border-top: 0px;"></th>
+                        </tr>
+                        @{ var counter = 1; }
+                        @foreach (var item in Model)
+                        {
+                            if (counter % 2 == 0)
+                            {
+                                <tr style="background-color: #f5f5f5; ">
+                                    <td style="word-break:break-all;  padding-left: 40px;">
+                                        @Html.DisplayFor(modelItem => item.TitleCampaing)
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        @Html.DisplayFor(modelItem => item.Sender)
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        @Html.DisplayFor(modelItem => item.Text)
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <button class="btn btn-primary edit" style="width: 80px;" data-id="@item.idcampaign">Edit  <i class="glyphicon glyphicon-edit"></i></button>
+
+                                        <br />
+                                        <button class="btn btn-success details" style="width: 80px;" data-id="@item.idcampaign">Details  <i class="glyphicon glyphicon-file"></i></button>
+
+                                        @*@Html.ActionLink("Details", "Details", new { id = item.iEmail })*@
+                                        <br />
+                                        <button class="btn btn-primary enviar" style="width: 80px;" data-id="@item.idcampaign">Send  <i class="glyphicon glyphicon-envelope"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td style="word-break:break-all;  padding-left: 40px;">
+                                        @Html.DisplayFor(modelItem => item.TitleCampaing)
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        @Html.DisplayFor(modelItem => item.Sender)
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        @Html.DisplayFor(modelItem => item.Text)
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <button class="btn btn-primary edit" style="width: 80px;" data-id="@item.idcampaign">Edit  <i class="glyphicon glyphicon-edit"></i></button>
+
+                                        <br />
+                                        <button class="btn btn-success details" style="width: 80px;" data-id="@item.idcampaign">Details  <i class="glyphicon glyphicon-file"></i></button>
+
+                                        @*@Html.ActionLink("Details", "Details", new { id = item.iEmail })*@
+                                        <br />
+                                        <button class="btn btn-primary enviar" style="width: 80px;" data-id="@item.idcampaign">Send  <i class="glyphicon glyphicon-envelope"></i></button>
+                                    </td>
+                                </tr>
+                            }
+
+                            counter++;
+                        }
+
+                    </table>
+
+
+                </div>
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<!-- about_area_end -->
+<br />
+<br />
+
+<div id="modaldosomething" class="modal fade" data-backdrop="false" role="dialog" style="margin-top: 0px; background-color: rgba(239, 122, 143, 0.7);/*! opacity: 0.5; */" />
+
+@section scripts{
+    <script>
+window.onload = function () {
+            $('.modal-backdrop').remove();
+        }</script>
+
+
+
+    <script>
+        window.addEventListener('click', function (event) {
+            if (event.target.id == "modalchoosesms") {
+                $("#modalchoosesms").hide();
+                $('#modalchoosesms').modal('hide');
+                $("#modalchoosesms").removeClass("show");
+                $("#modalchoosesms").css("display", "none");
+
+            }
+        });
+
+
+
+        $(function () {
+
+
+            $(".enviar").click(function () {
+
+                var id = $(this).attr("data-id");
+                $("#modaldosomething").load("/Home/SendCampaign?id=" + id, function () {
+                    $("#modaldosomething").modal();
+
+                    $("#modaldosomething").addClass("show");
+                    $("#modaldosomething").css("display", "block");
+                })
+
+
+            });
+
+            $(".edit").click(function () {
+
+                var id = $(this).attr("data-id");
+                window.open("@Url.Action("EditCampaign", "Home")?id=" + id, "_self");
+
+            });
+
+
+        })</script>
+}
+
+

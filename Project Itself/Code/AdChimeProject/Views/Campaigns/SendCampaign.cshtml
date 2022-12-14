@@ -1,0 +1,201 @@
+﻿@using AdChimeProject.Models
+@model AdChimeProject.tCampaignSend
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+    tCampaign _prj = (tCampaign)ViewBag.toolEmail;
+}
+
+
+
+<head>
+    <style>
+        .formulariologin {
+            padding-top: 10px;
+        }
+
+        ::-webkit-input-placeholder {
+            color: red;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+            color: red;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: red;
+        }
+
+        :-ms-input-placeholder {
+            color: red;
+        }
+
+
+        .btncls {
+            background-color: #3A4F5E;
+            border: #2e6da4;
+            font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            color: #fff;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            border-radius: 4px;
+            line-height: 1.5;
+            text-decoration: none;
+            /*Transition*/
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+        }
+
+            .btncls:hover {
+                background-color: #87A2B6;
+                border: #2e6da4;
+                font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+                font-size: 15px;
+                color: #000;
+                letter-spacing: 1px;
+                padding: 8px 12px;
+                font-size: 14px;
+                font-weight: normal;
+                border-radius: 4px;
+                line-height: 1.5;
+                text-decoration: none;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="padding-top: 5%;">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px !important;">
+            <div class="modal-content" style="">
+                <div class="modal-body" style="padding-top: 0px; padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">
+                    <div class="row">
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-10">
+                            <p style="">
+                                <br /><strong>Fill all the data below to send the campaing</strong>
+                            </p>
+
+
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("idcampaing", _prj.idcampaign)
+                                //@Html.HiddenFor(model => model.iEmail,, htmlAttributes: new { @Value = ViewBag.Car_id })
+                                <div class="modal-body">
+                                    <div class="form-horizontal">
+
+
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="Name">Recipient</label>
+                                            <div class="col-md-7" style="padding-top: 4px; padding-right: 0px;">
+                                                @Html.DropDownListFor(m => m.idrecipient, (IEnumerable<SelectListItem>)ViewBag.listofrecipients, "Please select a recipient", new { @class = "form-control", @required = "required", @style = "width: 95%;", data_placeholder = "Please select a recipient" })
+                                                @Html.ValidationMessageFor(m => m.idrecipient, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="col-md-2" style="padding-top: 2px; padding-left: 2px; padding-right: 2px; ">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="Name">Send Date 2</label>
+                                            <div class="col-md-7" style="padding-top: 4px; padding-right: 0px;">
+                                                @Html.TextBoxFor(m => m.sDatetoSend, new { @class = "form-control datepicker", @required = "required", @autocomplete = "off", @style = "width: 95%;", placeholder = "Click here to select a date and time" })
+                                                @Html.ValidationMessageFor(m => m.sDatetoSend, "", new { @class = "text-danger" })
+
+                                            </div>
+                                            <div class="col-md-2" style="padding-top: 2px; padding-left: 2px; padding-right: 2px; ">
+                                                <button type="button" id="showthisbutton" class="ui-datepicker-trigger" style="display:none;"><i class="fa fa-calendar"></i></button>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Send" class="btn btn-primary" />
+                                            <input type="button" value="Cancel" class="btn btn-danger" data-dismiss="modal" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                        </div>
+                        <div class="col-md-1" style="text-align: right;">
+                            <span onclick="$('#modaldosomething').modal('hide'); $('#modaldosomething').removeClass('show'); $('#modaldosomething').css('display', 'none');" class="w3-button w3-display-topright" style="font-size: 20px;color: black;">
+                                X
+                            </span>
+                        </div>
+                    </div>
+
+
+
+
+                </div><!-- /.modal-content -->
+
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+</body>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $('#exportarexemplo').click(function () {
+   var url = '@Url.Action("Download", "ToolEmailRecipients")';
+
+        window.location.href = url;
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#idrecipient").select2();
+    });
+</script>
+
+
+<script>
+
+    $(function () {
+        var date = new Date();
+        $(".datepicker").datetimepicker({
+            dateFormat: "yy/mm/dd",
+            changeMonth: true,
+            changeYear: true,
+            //yearRange : "-10:+10"
+            minDate: date,
+            changeMonth: true,
+            changeYear: true,
+            "showButtonPanel": false,
+            buttonText: "",
+            showSecond: false,
+            showMillisec: false,
+            showMicrosec: false,
+            showTimezone: false,
+            startTime: date.setHours(date.getHours() + 1)
+        });
+        document.getElementsByClassName('ui-datepicker-trigger')[0].style.visibility = "hidden";
+        document.getElementById('showthisbutton').style.visibility = "visible";
+
+    });
+</script>
+
+
+

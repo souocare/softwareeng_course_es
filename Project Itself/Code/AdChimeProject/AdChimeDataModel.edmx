@@ -104,6 +104,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="100" />
           <Property Name="Password" Type="nvarchar(max)" />
           <Property Name="iDLogin" Type="uniqueidentifier" />
+          <Property Name="isadmin" Type="bit" />
         </EntityType>
         <EntityType Name="tVarContacts">
           <Key>
@@ -501,6 +502,7 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="iDLogin" Type="Guid" />
+          <Property Name="isadmin" Type="Boolean" />
         </EntityType>
         <EntityType Name="tVarContact">
           <Key>
@@ -633,6 +635,7 @@
           <EntitySetMapping Name="tUsers">
             <EntityTypeMapping TypeName="AdChimeProejctModel.tUser">
               <MappingFragment StoreEntitySet="tUsers">
+                <ScalarProperty Name="isadmin" ColumnName="isadmin" />
                 <ScalarProperty Name="iDLogin" ColumnName="iDLogin" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

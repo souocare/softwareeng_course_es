@@ -23,6 +23,10 @@
                         <img src="~/Content/Images/MyLists.png" style="width: 30px;" /> <span style="color:#E10028;">My Contacts</span>
                     </a>
                     &nbsp;&nbsp;&nbsp;
+                    <button class="addnewfield" style="background: none !important; border: none; padding: 0 !important;">
+                        <img src="~/Content/Images/addentry.png" style="width: 30px;" /> <span style="color:#999999;">Create NEW list</span>
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
                     <button class="newlista" style="background: none !important; border: none; padding: 0 !important;">
                         <img src="~/Content/Images/mylistscreatecontacts.png" style="width: 30px;" /> <span style="color:#999999;">Create NEW list</span>
                     </button>
@@ -77,6 +81,18 @@
                                     @col
                                 </th>
                             }
+
+                            <th>
+                                Details
+                            </th>
+
+                            <th>
+                                Edit
+                            </th>
+
+                            <th>
+                                Delete
+                            </th>
                         </tr>
                         @{ var counter = 1; }
                         @foreach (var item in Model)
@@ -117,6 +133,16 @@
                                         }
 
                                     }
+
+                                    <td style="word-break:break-all;">
+                                        <button data-whatever="@item.idContact" id='buttondetails'><img src="~/Content/Images/opendetailsinfo.png" style="width: 30px;" /></button>
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        <button data-whatever="@item.idContact" id='buttoneditcontact'><img src="~/Content/Images/editlogo.png" style="width: 30px;" /></button>
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        <a href="@Url.Action("DeleteContact", "Contacts", new { idcontact = item.idContact });"><img src="~/Content/Images/deletelogo.png" style="width: 30px;" /></a>
+                                    </td>
                                 </tr>
 
                             }
@@ -156,11 +182,23 @@
                                         }
 
                                     }
+
+                                    <td style="word-break:break-all;">
+                                        <button data-whatever="@item.idContact" id='buttondetails'><img src="~/Content/Images/opendetailsinfo.png" style="width: 30px;" /></button>
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        <button data-whatever="@item.idContact" id='buttoneditcontact'><img src="~/Content/Images/editlogo.png" style="width: 30px;" /></button>
+                                    </td>
+                                    <td style="word-break:break-all;">
+                                        <a href="@Url.Action("DeleteContact", "Contacts", new { idcontact = item.idContact });"><img src="~/Content/Images/deletelogo.png" style="width: 30px;" /></a>
+                                    </td>
                                 </tr>
                             }
 
                             counter++;
                         }
+
+
 
                     </table>
                     <br />
@@ -184,12 +222,17 @@
 <br />
 <br />
 
+<div id="modaladdnewfield" class="modal fade" data-backdrop="false" role="dialog" style="margin-top: 0px; background-color: rgba(239, 122, 143, 0.7);/*! opacity: 0.5; */" />
+
 <div id="modaladdnewlist" class="modal fade" data-backdrop="false" role="dialog" style="margin-top: 0px; background-color: rgba(239, 122, 143, 0.7);/*! opacity: 0.5; */" />
+
+<div id="modalviewdetails" class="modal fade" data-backdrop="false" role="dialog" style="margin-top: 0px; background-color: rgba(239, 122, 143, 0.7);/*! opacity: 0.5; */" />
+<div id="modalvieweditcontact" class="modal fade" data-backdrop="false" role="dialog" style="margin-top: 0px; background-color: rgba(239, 122, 143, 0.7);/*! opacity: 0.5; */" />
 
 
 @section scripts{
     <script>
-            window.onload = function () {
+        window.onload = function () {
             $('.modal-backdrop').remove();
         }</script>
 
@@ -204,12 +247,50 @@
                 $("#modaladdnewlist").css("display", "none");
 
             }
+            if (event.target.id == "modaladdnewfield") {
+                $("#modaladdnewfield").hide();
+                $('#modaladdnewfield').modal('hide');
+                $("#modaladdnewfield").removeClass("show");
+                $("#modaladdnewfield").css("display", "none");
+
+            }
+
+            if (event.target.id == "modalviewdetails") {
+                $("#modalviewdetails").hide();
+                $('#modalviewdetails').modal('hide');
+                $("#modalviewdetails").removeClass("show");
+                $("#modalviewdetails").css("display", "none");
+            }
+
+            if (event.target.id == "modalvieweditcontact") {
+                $("#modalvieweditcontact").hide();
+                $('#modalvieweditcontact').modal('hide');
+                $("#modalvieweditcontact").removeClass("show");
+                $("#modalvieweditcontact").css("display", "none");
+            }
         });
 
 
 
         $(function () {
 
+            $('#buttondetails').bind('click', function () {
+                var whatever = $(this).data('whatever');
+                $("#modalviewdetails").load("/Contacts/DetailsContacts?idcontact=" + whatever, function () {
+                    $("#modalviewdetails").modal();
+                    $("#modalviewdetails").addClass("show");
+                    $("#modalviewdetails").css("display", "block");
+                })
+            });
+
+            $('#buttoneditcontact').bind('click', function () {
+                var whatever = $(this).data('whatever');
+                $("#modalviewdetails").load("/Contacts/EditContacts?idcontact=" + whatever, function () {
+                    $("#modalviewdetails").modal();
+                    $("#modalviewdetails").addClass("show");
+                    $("#modalviewdetails").css("display", "block");
+                })
+            });
 
             $(".newlista").click(function () {
 
@@ -218,6 +299,32 @@
 
                     $("#modaladdnewlist").addClass("show");
                     $("#modaladdnewlist").css("display", "block");
+                })
+
+
+            });
+
+            $(".addnewfield").click(function () {
+
+                $("#modaladdnewfield").load("/Contacts/AddNewField", function () {
+                    $("#modaladdnewfield").modal();
+
+                    $("#modaladdnewfield").addClass("show");
+                    $("#modaladdnewfield").css("display", "block");
+                })
+
+
+            });
+
+
+
+            $(".addnewfield").click(function () {
+
+                $("#modaladdnewfield").load("/Contacts/AddNewField", function () {
+                    $("#modaladdnewfield").modal();
+
+                    $("#modaladdnewfield").addClass("show");
+                    $("#modaladdnewfield").css("display", "block");
                 })
 
 

@@ -1,0 +1,229 @@
+﻿
+@model AdChimeProject.tTemplateSm
+
+@{ ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<!-- slider_area_end -->
+<!-- about_area_start -->
+<div style="margin-top:20px;">
+    <div>
+        <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-12" style="padding-left: 10px;">
+                    <a href="@Url.Action("NewText", "Texts", null)" style="text-decoration:none;">
+                        <img src="~/Content/Images/AddNew.png" style="width: 30px;" /> <span style="color:#999999;">Create NEW SMS template</span>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("MyTexts", "Texts", null)" style="text-decoration:none;">
+                        <img src="~/Content/Images/MyLists.png" style="width: 30px;" /> <span style="color:#E10028;">My SMS's</span>
+                    </a>
+                    <br /><br />
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-1">
+
+                    <p style="color:#E10028;">My SMS's</p>
+                </div>
+                <div class="col-md-11">
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <input type="radio" id="nameasc" name="selectlist" value="nameasc" checked>
+                    <label for="nameasc">Name (ascending)</label><br>
+                    <input type="radio" id="updatedatedesc" name="selectlist" value="updatedatedesc">
+                    <label for="updatedatedesc">Last Update (descending)</label>
+                    <br><br>
+
+                    <div id="listall" style="display:block">
+                        @foreach (var student in ViewBag.Testee)
+                        {
+
+                            <a href="/Texts/MyTextSelected/@student[0]" style="border-bottom: 1px solid #E2E7F0; padding-bottom: 5px; padding-right: 90px; padding-left: 10px; color:#0162A2; ">@student[1]</a>
+                            <br /><br />}
+                    </div>
+                    <div id="listactives" style="display:none">
+                        @foreach (var student in ViewBag.Testeev2)
+                        {
+
+                            <a href="/Texts/MyTextSelected/@student[0]" style="border-bottom: 1px solid #E2E7F0; padding-bottom: 5px; padding-right: 90px; padding-left: 10px; color:#0162A2; ">@student[1]</a>
+                            <br /><br />}
+                    </div>
+
+                    <a href="" style="border-bottom: 1px solid #E2E7F0; padding-bottom: 5px; padding-right: 90px; padding-left: 10px; color:#0162A2; ">Accounting Inc</a>
+                    <br /><br />
+                    <a href="" style="border-bottom: 1px solid #E2E7F0; padding-bottom: 5px; padding-right: 90px; padding-left: 10px; color:#0162A2;">Air New</a>
+                    <br /><br />
+                </div>
+
+
+
+
+                <div class="col-md-5 col-sm-5">
+
+                    @using (Html.BeginForm("MyTextSelected", "Texts", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data", style = "background-color: rgba(255, 255, 255, 0.6);" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+
+                        <div class="form-horizontal">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.HiddenFor(m => m.idtemplate)
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="Name" style="padding-top: 0px;">Template Name</label>
+                                        <div class="col-md-8" style="padding-top: 4px; padding-right: 0px;">
+                                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @required = "required", @style = "width: 95%;", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="Name" style="padding-top: 0px;">Is Approved?</label>
+                                        @if (Session["isadmin"].ToString() == "True")
+                                        {
+                                            <div class="col-md-8" style="padding-top: 4px; padding-right: 0px;">
+                                                @Html.CheckBoxFor(m => m.isaproved, new { @class = "form-control", @style = "width: 95%;" })
+                                                @Html.ValidationMessageFor(m => m.isaproved, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-8" style="padding-top: 4px; padding-right: 0px;">
+                                                @Html.CheckBoxFor(m => m.isaproved, new { @class = "form-control", @style = "width: 95%;",  @disabled = "disabled" })
+                                                @Html.ValidationMessageFor(m => m.isaproved, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="Name">SMS Text</label>
+                                        <div class="col-md-8" style="padding-top: 4px; padding-right: 0px;">
+                                            @if (Session["isadmin"].ToString() == "True")
+                                            {
+                                                @Html.TextAreaFor(m => m.Text, new { @class = "form-control", @required = "required", @style = "width: 95%; height: 130px;", @oninput = "changetextphone()", maxlength = 159 })
+                                                @Html.ValidationMessageFor(m => m.Text, "", new { @class = "text-danger" })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextAreaFor(m => m.Text, new { @class = "form-control", @style = "width: 95%; height: 130px;",  maxlength = 159, @disabled = "disabled" })
+                                                @Html.ValidationMessageFor(m => m.Text, "", new { @class = "text-danger" })
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div>
+                                        <div class="col-md-4">
+
+                                        </div>
+                                        <div class="col-md-8" style="padding-top: 4px; padding-right: 0px; padding-left: 7px;">
+                                            <input type="submit" onclick="return validateForm();" class="btn btn-primary btn-block btn-lg" value="Submit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>*@
+                    }
+
+                </div>
+
+
+
+
+                <div class="col-md-3 col-sm-4">
+
+                    <div class="smartphone" style="margin-top: 5px;">
+
+                        <div class="content">
+                            <div id="smartphoneSender" style="width:173px; height:23px; text-align: center;background-color: aliceblue;padding-top: 10px;font-size: 15px;color: grey;"></div>
+                            <textarea disabled name="cellphonetextarea" placeholder="@Model.Text" maxlength="829" rows="5" cols="25" class="mensagem contador-txt" style="width: 172px;height:205px;font-size:12px;resize: none;background-color:#D9EEF2; "></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<!-- about_area_end -->
+<br />
+<br />
+
+<script>
+    $('input[type=radio][name=selectlist]').change(function () {
+        if (this.value == 'nameasc') {
+            document.getElementById("listall").style.display = 'block';
+            document.getElementById("listactives").style.display = 'none';
+        }
+        else if (this.value == 'updatedatedesc') {
+            document.getElementById("listall").style.display = 'none';
+            document.getElementById("listactives").style.display = 'block';
+        }
+    });
+
+
+    function changetextphone() {
+        var x = document.getElementById("Text").value;
+        document.getElementsByName('cellphonetextarea')[0].placeholder = x;
+    }
+
+</script>

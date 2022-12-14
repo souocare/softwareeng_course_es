@@ -149,6 +149,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CampaignsController.cs" />
+    <Compile Include="Controllers\TextsController.cs" />
+    <Compile Include="Controllers\ListsController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -222,12 +226,16 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\adchime_logo.png" />
+    <Content Include="Content\Images\addentry.png" />
     <Content Include="Content\Images\AddNew.png" />
+    <Content Include="Content\Images\deletelogo.png" />
+    <Content Include="Content\Images\editlogo.png" />
     <Content Include="Content\Images\large_xthumbnail.png" />
     <Content Include="Content\Images\MainPage.png" />
     <Content Include="Content\Images\Mockpage.png" />
     <Content Include="Content\Images\MyLists.png" />
     <Content Include="Content\Images\mylistscreatecontacts.png" />
+    <Content Include="Content\Images\opendetailsinfo.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\js_m\ajax-form.js" />
@@ -314,6 +322,7 @@
     <Content Include="AdChimeDataModel.edmx.diagram">
       <DependentUpon>AdChimeDataModel.edmx</DependentUpon>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\cookiebanner.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -360,6 +369,24 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Contacts\MyContacts.cshtml" />
     <Content Include="Views\Contacts\ImportContacts.cshtml" />
+    <Content Include="Views\Contacts\AddNewField.cshtml" />
+    <Content Include="Views\Contacts\DetailsContacts.cshtml" />
+    <Content Include="Views\Contacts\EditContacts.cshtml" />
+    <Content Include="Views\Lists\MyLists.cshtml" />
+    <Content Include="Views\Lists\NewList.cshtml" />
+    <Content Include="Views\Texts\MyTexts.cshtml" />
+    <Content Include="Views\Texts\MyTextSelected.cshtml" />
+    <Content Include="Views\Texts\NewText.cshtml" />
+    <Content Include="Views\Contacts\ImportContactsMapping.cshtml" />
+    <Content Include="Views\Campaigns\Campaigns.cshtml" />
+    <Content Include="Views\Campaigns\ChooseSMSText.cshtml" />
+    <Content Include="Views\Campaigns\ChooseSMSTextEdit.cshtml" />
+    <Content Include="Views\Campaigns\EditCampaign.cshtml" />
+    <Content Include="Views\Campaigns\NewCampaign.cshtml" />
+    <Content Include="Views\Campaigns\SendCampaign.cshtml" />
+    <Content Include="Views\Admin\AdminPage.cshtml" />
+    <Content Include="Views\Admin\ManageLogin.cshtml" />
+    <Content Include="Views\Admin\LoadSMSBalance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

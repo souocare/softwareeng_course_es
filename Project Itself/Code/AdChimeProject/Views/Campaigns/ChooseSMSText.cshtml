@@ -1,0 +1,158 @@
+﻿@using AdChimeProject.Models
+@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<AdChimeProject.tTemplateSm>
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+
+<head>
+    <style>
+        .formulariologin {
+            padding-top: 10px;
+        }
+
+        ::-webkit-input-placeholder {
+            color: red;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+            color: red;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: red;
+        }
+
+        :-ms-input-placeholder {
+            color: red;
+        }
+
+
+        .btncls {
+            background-color: #3A4F5E;
+            border: #2e6da4;
+            font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            color: #fff;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            border-radius: 4px;
+            line-height: 1.5;
+            text-decoration: none;
+            /*Transition*/
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+        }
+
+            .btncls:hover {
+                background-color: #87A2B6;
+                border: #2e6da4;
+                font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+                font-size: 15px;
+                color: #000;
+                letter-spacing: 1px;
+                padding: 8px 12px;
+                font-size: 14px;
+                font-weight: normal;
+                border-radius: 4px;
+                line-height: 1.5;
+                text-decoration: none;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="padding-top: 5%;">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px !important;">
+            <div class="modal-content" style="">
+                <div class="modal-body" style="padding-top: 0px; padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">
+                    <div class="row">
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-10">
+                            <p style="color:white;">
+                                <br /><strong>Welcome to Astellas SMS Approved platform. <br />Please, enter your credentials.</strong>
+                            </p>
+
+
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Title
+                                    </th>
+                                    <th>
+                                        Text
+                                    </th>
+                                    <th></th>
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Text)
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary choosetemplatewithid" onclick="mf('@item.idtemplate', '@item.Text');">Choose Template  <i class="glyphicon glyphicon-edit"></i></button>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </table>
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+
+                        </div>
+                        <div class="col-md-1" style="text-align: right;">
+                            <span onclick="$('#modalchoosesms').modal('hide'); $('#modalchoosesms').removeClass('show'); $('#modalchoosesms').css('display', 'none');" class="w3-button w3-display-topright" style="font-size: 20px;color: black;">
+                                X
+                            </span>
+                        </div>
+                    </div>
+
+
+
+
+                </div><!-- /.modal-content -->
+
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+</body>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $('#exportarexemplo').click(function () {
+   var url = '@Url.Action("Download", "ToolEmailRecipients")';
+
+        window.location.href = url;
+    });
+
+
+    function mf(data1, data2) {
+        document.getElementsByName('cellphonetextarea')[0].placeholder = data2;
+        document.getElementById("Text").value = data2;
+        document.getElementById("idtemplate").value = data1;
+        $('#modalchoosesms').modal('hide');
+        $('#modalchoosesms').removeClass('show');
+        $('#modalchoosesms').css('display', 'none');
+    }
+
+
+</script>

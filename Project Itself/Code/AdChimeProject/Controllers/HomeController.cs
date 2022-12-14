@@ -47,15 +47,20 @@ namespace AdChimeProject.Controllers
             var user_check = dbadchime.tUsers.Where(x => x.Email == model.Email).FirstOrDefault();
             if (user_check == null)
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Index", "Home");
             } else
             {
-                if ( GetStringSha256Hash(model.Password) == model.Password)
+                var adfsdf = GetStringSha256Hash(model.Password);
+                if ( GetStringSha256Hash(model.Password).ToString() == user_check.Password.ToString())
                 {
+                    Session["idlogin"] = user_check.iDLogin.ToString();
+                    Session["email"] = user_check.Email.ToString();
+                    Session["isadmin"] = user_check.isadmin.ToString();
+                    Session["Nome"] = user_check.Name.ToString();
                     return RedirectToAction("MyContacts", "Contacts");
                 } else
                 {
-                    return RedirectToAction("Login", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
             }
 

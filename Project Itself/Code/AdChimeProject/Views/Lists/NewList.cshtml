@@ -1,0 +1,390 @@
+﻿
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+
+
+<head>
+    <style>
+        .formulariologin {
+            padding-top: 10px;
+        }
+
+        ::-webkit-input-placeholder {
+            color: red;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+            color: red;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: red;
+        }
+
+        :-ms-input-placeholder {
+            color: red;
+        }
+
+
+        .btncls {
+            background-color: #3A4F5E;
+            border: #2e6da4;
+            font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            color: #fff;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            border-radius: 4px;
+            line-height: 1.5;
+            text-decoration: none;
+            /*Transition*/
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+        }
+
+            .btncls:hover {
+                background-color: #87A2B6;
+                border: #2e6da4;
+                font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+                font-size: 15px;
+                color: #000;
+                letter-spacing: 1px;
+                padding: 8px 12px;
+                font-size: 14px;
+                font-weight: normal;
+                border-radius: 4px;
+                line-height: 1.5;
+                text-decoration: none;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="padding-top: 5%;">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px !important;">
+            <div class="modal-content" style="">
+                <div class="modal-body" style="padding-top: 0px; padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">
+                    <div class="row">
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-10">
+                            <p style="">
+                                <br /><strong>Fill all the data below to send the campaing</strong>
+                            </p>
+
+                            <div class="row">
+
+                                <div name="myform" id="myform" style="width:100%;">
+
+                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px; text-align: center;">
+                                        <p style="font-size: 23px;font-weight: bold;">New Recipient</p>
+                                        @if (ViewBag.MsgErroTitle == "sim")
+                                        {
+                                            <p style="color: red;font-weight: bold;">Error! The name of the list you chose has already been chosen. Please fill the fields again.</p>
+                                        }
+                                    </div>
+
+                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+                                        <label class="col-md-3 " for="irecipientetexto">Name of the list<br /></label>
+                                        <input type="text" name="irecipientetexto" id="irecipientetexto" class="col-md-9 form-control" required />
+                                    </div>
+
+                                    <br /><br />
+
+                                    <hr />
+
+                                    <br /><br />
+
+                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px; text-align: center;">
+                                        <p style="font-size: 23px;font-weight: bold;">Filters</p>
+                                    </div>
+
+
+                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px; margin-bottom:20px;">
+                                        <label class="col-md-3" for="nomeseelect"></label>
+                                        <div class="col-md-9" id="input-group" style="">
+
+                                            <div class="row" id="addfilters">
+
+                                                <div id="1" class="col-md-12" style="margin-bottom: 20px;">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <select id="systemfields_1_1" name="systemfields_1_1" style="width: 100%; height: 80px;" class="form-control select2-multiple_1" placeholder="Select one/multiple filters" onchange="Getvaluesselect(1)">
+                                                                <option disabled selected value></option>
+                                                                @foreach (var field in ViewBag.Systemfields)
+                                                                {
+                                                                    <option value="@field">@field</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <select id="systemfields_1_2" name="systemfields_1_2" style="width: 100%;" class="form-control select2-multiple_1">
+                                                                <option disabled selected value></option>
+                                                                <option value="equals">equals</option>
+                                                                <option value="notequal">not equal to</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-4" id="div3_1">
+                                                            <select id="systemfields_1_3" name="systemfields_1_3" style="width: 100%;" class="form-control select2-multiplethird_1" multiple>
+                                                            </select>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <br /><br />
+
+
+                                            </div>
+
+
+
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px; margin-bottom:20px;">
+                                        <label class="col-md-3"></label>
+                                        <div class="col-md-9" id="input-group" style="">
+
+                                            <button type="button" onclick="addnewfilter()">+ Add Condition</button>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px; padding-top: 20px;">
+                                        <button type="submit" class="btn btn-primary btn-block btn-lg submitar" value="Submit">Submit</button>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-1" style="text-align: right;">
+                            <span onclick="$('#modaladdnewlist').modal('hide'); $('#modaladdnewlist').removeClass('show'); $('#modaladdnewlist').css('display', 'none');" class="w3-button w3-display-topright" style="font-size: 20px;color: black;">
+                                X
+                            </span>
+                        </div>
+                    </div>
+
+
+
+
+                </div><!-- /.modal-content -->
+
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+</body>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $(function () {
+        $(".select2-multiple_1").select2({
+            allowClear: true,
+            placeholder: "Select option"
+        });
+    });
+
+    $(function () {
+        $(".select2-multiplethird_1").select2({
+            allowClear: true,
+            placeholder: "Select option/options"
+        });
+    });
+
+
+
+
+    $(function () {
+        $("#countriesselect").select2({
+            allowClear: true
+        });
+    });
+
+
+    function addnewfilter() {
+        var ids = [];
+
+        $('#addfilters > div').map(function () {
+            ids.push(this.id);
+        });
+
+        //for (let index = 0; index < ids.length; ++index) {
+        //    alert('.select2-multiple_' + String(ids[index]));
+        //    alert($('.select2-multiple_' + String(ids[index])));
+        //    $('.select2-multiple_' + String(ids[index])).select2('destroy');
+        //    $('.select2-multiplethird_' + String(ids[index])).select2('destroy');
+        //    //const element = ids[index];
+        //    // ...use `element`...
+        //}
+
+        var oldhtml = document.getElementById("addfilters");
+        var newhtmlthing= `
+            <div id="` + String(parseInt(ids[ids.length - 1]) + 1) + `" class="col-md-12" style="margin-bottom: 20px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <select id="systemfields_` + String(parseInt(ids[ids.length - 1]) + 1) + `_1"  name="systemfields_` + String(parseInt(ids[ids.length - 1]) + 1) + `_1" style="width: 100%; height: 80px;" class="form-control select2-multiple_` + String(parseInt(ids[ids.length - 1]) + 1) + `" placeholder="Select one/multiple filters" onchange="Getvaluesselect(` + String(parseInt(ids[ids.length - 1]) + 1) + `)">
+                            <option disabled selected value></option>
+                            @foreach (var field in ViewBag.Systemfields)
+                            {
+                                <option value="@field">@field</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <select id="systemfields_` + String(parseInt(ids[ids.length - 1]) + 1) + `_2"  name="systemfields_` + String(parseInt(ids[ids.length - 1]) + 1) + `_2" style="width: 100%;" class="form-control select2-multiple_` + String(parseInt(ids[ids.length - 1]) + 1) + `" placeholder="Select one/multiple filters">
+                            <option disabled selected value></option>
+                            <option value="equals">equals</option>
+                            <option value="notequal">not equal to</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4" id="div3_` + String(parseInt(ids[ids.length - 1]) + 1) + `">
+                        <select id="systemfields_` + String(parseInt(ids[ids.length - 1]) + 1) + `_3"  name="systemfields_` + String(parseInt(ids[ids.length - 1]) + 1) + `_3" style="width: 100%;" class="form-control select2-multiplethird_` + String(parseInt(ids[ids.length - 1]) + 1) + `" placeholder="Select one/multiple filters" multiple>
+                            @foreach (var itemnome in ViewBag.Nomes)
+                            {
+                                <option value="@itemnome">@itemnome</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <br /><br />
+
+            `;
+
+
+        oldhtml.insertAdjacentHTML('beforeend', newhtmlthing);
+        //alert("aaa");
+
+        //var idsafter = [];
+
+        //$('#addfilters > div').map(function () {
+        //    idsafter.push(this.id);
+        //});
+
+        //for (let index = 0; index < idsafter.length; ++index) {
+        //    $(".select2-multiple_" + String(ids[index])).select2({
+        //        allowClear: true,
+        //        placeholder: "Select option"
+        //    });
+
+        //    $(".select2-multiplethird_" + String(ids[index])).select2({
+        //        allowClear: true,
+        //        placeholder: "Select option/options"
+        //    });
+        //    //const element = ids[index];
+        //    // ...use `element`...
+        //}
+
+
+        $(".select2-multiple_" + String(parseInt(ids[ids.length - 1]) + 1)).select2({
+            allowClear: true,
+            placeholder: "Select option"
+        });
+
+        $(".select2-multiplethird_" + String(parseInt(ids[ids.length - 1]) + 1)).select2({
+            allowClear: true,
+            placeholder: "Select option/options"
+        });
+    };
+
+
+    function Getvaluesselect(id) {
+        d = document.getElementById("systemfields_" + id + "_1").value;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Addlog", "Home")',
+                data: { elementvalue: d, idv: id },
+
+                success: function (data) {
+                    data = String(data).replace("select2-multiplethird_mudar", "select2-multiplethird_" + id)
+                    document.getElementById("div3_" + id).innerHTML = data;
+                    if (String(data).includes("<select")) {
+                        $(".select2-multiplethird_" + id).select2({
+                            allowClear: true,
+                            placeholder: "Select option/options"
+                        });
+                    }
+
+                },
+                error: function () {
+                }
+            });
+    };
+
+
+    $(function () {
+
+            var form = document.getElementById("myform");
+        $(".submitar").click(function () {
+            var idsfinais = [];
+
+                $('#addfilters > div').map(function () {
+                    idsfinais.push(this.id);
+                });
+                var output = [];
+                var idsfinaislength = idsfinais.length;
+                for (var i = 0; i < idsfinaislength; i++)
+                {
+                    var valoridf = idsfinais[i];
+                    var obj = [];
+                    //var selectum = document.getElementById("systemfields_" + String(valoridf) + "_1").value;
+                    var selectum = $('#systemfields_' + String(valoridf) + '_1').val();
+                    obj.push(selectum)
+                    //var selectdois = document.getElementById("systemfields_" + String(valoridf) + "_2").value;
+                    var selectdois = $('#systemfields_' + String(valoridf) + '_2').val();
+                    obj.push(selectdois)
+                    //obj.push(selectdois)
+                    //var selecttres = document.getElementById("systemfields_" + String(valoridf) + "_3").value;
+                    var selecttres = $('#systemfields_' + String(valoridf) + '_3').val();
+                    obj.push(selecttres)
+                    //obj.push(selecttres)
+
+                    output.push(obj);
+                }
+
+                var idrecipient = document.getElementById("irecipientetexto").value;
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("NewList", "Home")",
+                    data: { output: JSON.stringify(output), irecipientetexto: idrecipient },
+                    dataType: "json",
+                    success: function (data) {
+                        window.location.href = data;
+                    }
+                });
+
+
+            });
+        })
+
+
+
+</script>

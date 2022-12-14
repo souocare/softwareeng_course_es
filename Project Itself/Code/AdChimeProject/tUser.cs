@@ -19,5 +19,6 @@ namespace AdChimeProject
         public string Email { get; set; }
         public string Password { get; set; }
         public Nullable<System.Guid> iDLogin { get; set; }
+        public Nullable<bool> isadmin { get; set; }
     }
 }

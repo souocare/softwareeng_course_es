@@ -1,0 +1,215 @@
+﻿
+@{ ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<!-- slider_area_end -->
+<!-- about_area_start -->
+<div style="margin-top:20px;">
+    <div>
+        <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-12" style="padding-left: 10px;">
+                    <a href="@Url.Action("ImportContacts", "Contacts", null)" style="text-decoration:none;">
+                        <img src="~/Images/AddNew.png" style="width: 30px;" /> <span style="color:#E10028;">Import Contacts</span>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("MyContacts", "Contacts", null)" style="text-decoration:none;">
+                        <img src="~/Images/MyLists.png" style="width: 30px;" /> <span style="color:#999999;">My Lists</span>
+                    </a>
+                    <br /><br />
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-2">
+
+                    <p style="color:#E10028;">Import Contacts</p>
+                </div>
+                <div class="col-md-10">
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-2 col-sm-12">
+
+                </div>
+                <div class="col-md-8 col-sm-12">
+
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center;">
+                            <p style="font-weight: bold; font-size: 24px;">
+                                Field Mapping
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div name="myform" id="myform" style="width:100%;">
+
+                            <input type="text" name="columnshd" id="columnshd" class="form-control" style="display: none;" />
+
+
+
+                            <div class="divTable">
+                                <div class="divTableBody">
+                                    <div class="divTableRowHead">
+                                        <div class="divTableCell" style="width:40%; font-weight:bold; font-size: 18px; text-align: center;">File Fields</div>
+                                        <div class="divTableCell" style="width:40%; font-weight:bold; font-size: 18px; text-align: center;">System Fields</div>
+                                        <div class="divTableCell" style="width:20%; font-weight:bold; font-size: 18px; text-align: center;"></div>
+                                    </div>
+                                    @{ var counter = 1; }
+                                    @foreach (var itemvbg in ViewBag.FileFields)
+                                    {
+                        <div class="divTableRow">
+                            <div class="divTableCellUm" style="text-align: center;">@itemvbg</div>
+                            <div class="divTableCell">
+                                <select id="selectdiv_@counter" name="selectdiv_@counter" style="width: 100%; text-align: center;" class="form-control select2-multiple_1" placeholder="Select one/multiple filters" onchange="checkifnewcolumn(@counter)" required>
+                                    <option disabled selected value></option>
+                                    @foreach (var sfil in ViewBag.Systemfields)
+                                    {
+                    <option value="@sfil">@sfil</option>
+}
+                                </select>
+                            </div>
+                            <div class="divTableCell">
+                                <select id="selectdivtres_@counter" name="selectdivtres_@counter" style="width: 100%; text-align: center; display:none;" class="form-control select2-multipleselectthree_@counter" placeholder="Select one/multiple filters" onchange="checkifnewcolumn(@counter)">
+                                    <option disabled selected value></option>
+                                    <option value="integer">Numbers</option>
+                                    <option value="string">Text</option>
+                                    <option value="singleoption">Single Option</option>
+                                    <option value="multipleotpion">Multiple Option</option>
+                                    <option value="date">Date</option>
+                                </select>
+                            </div>
+                        </div>counter++;
+
+                                    }
+                                </div>
+                            </div>
+
+                            <br /><br />
+
+                            <button type="submit" class="btn btn-primary btn-block btn-lg submitar" value="Submit">Submit</button>
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="col-md-2 col-sm-12">
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<!-- about_area_end -->
+<br />
+<br />
+
+@section scripts{
+    <script>$(function () {
+            $("#sortable").sortable();
+        });
+
+        $(function () {
+            $(".select2-multiple_1").select2({
+                allowClear: true,
+                placeholder: "Select the system field"
+            });
+        });</script>
+
+
+    <script>
+        function checkifnewcolumn(id) {
+            d = document.getElementById("selectdiv_" + id).value;
+            if (d == "New Column") {
+                $(".select2-multipleselectthree_" + id).select2({
+                    allowClear: true,
+                    placeholder: "Select field type"
+                });
+            } else {
+                if ($("#select2-selectdivtres_" + id + "-container")[0]) {
+                    $(".select2-multipleselectthree_" + id).select2('destroy');
+                } else {
+                    // Do something if class does not exist
+                }
+
+            }
+        }
+    </script>
+
+
+    <script>
+
+
+        $(function () {
+
+            var form = document.getElementById("myform");
+            $(".submitar").click(function () {
+                var output = [];
+                $(".divTableRow").each(function () {
+                    var obj = {};
+                    var cont = 1;
+                    $(this).find("div").each(function () {
+                        if (cont == 1) {
+                            obj.filefield = $(this).text();
+                            cont = cont + 1;
+                        }
+                        else if (cont == 2) {
+                            obj.systemfield = $(this).find(":selected").text()
+                            cont = cont + 1;
+                        }
+                        else if (cont == 3) {
+                            obj.typefield = $(this).find(":selected").text()
+                            cont = 1;
+                        } else {
+
+                        }
+                    })
+                    output.push(obj);
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ImportContactsMappingFinal", "Contacts")",
+                    data: { output: JSON.stringify(output), filestring: "@ViewBag.filename", delimitador: "@ViewBag.delimitador", encodingtype: "@ViewBag.encodingtype", updateuser: "@ViewBag.updateuser", createrecipient: "@ViewBag.createrecipient" },
+                    dataType: "json",
+                    success: function (data) {
+                        window.location.href = data;
+                    }
+                });
+
+
+            });
+        })
+
+    </script>
+
+
+
+}

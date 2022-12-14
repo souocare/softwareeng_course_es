@@ -1,0 +1,203 @@
+﻿
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+    var list_contactsmain = (List<string>)ViewData["ContactMain"];
+}
+
+
+
+<head>
+    <style>
+        .formulariologin {
+            padding-top: 10px;
+        }
+
+        ::-webkit-input-placeholder {
+            color: red;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+            color: red;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: red;
+        }
+
+        :-ms-input-placeholder {
+            color: red;
+        }
+
+
+        .btncls {
+            background-color: #3A4F5E;
+            border: #2e6da4;
+            font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            color: #fff;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            border-radius: 4px;
+            line-height: 1.5;
+            text-decoration: none;
+            /*Transition*/
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+        }
+
+            .btncls:hover {
+                background-color: #87A2B6;
+                border: #2e6da4;
+                font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+                font-size: 15px;
+                color: #000;
+                letter-spacing: 1px;
+                padding: 8px 12px;
+                font-size: 14px;
+                font-weight: normal;
+                border-radius: 4px;
+                line-height: 1.5;
+                text-decoration: none;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="padding-top: 5%;">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px !important;">
+            <div class="modal-content" style="">
+                <div class="modal-body" style="padding-top: 0px; padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">
+                    <div class="row">
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-10">
+
+                            <div class="row">
+
+                                <div style="width:100%;">
+
+                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+                                        <div class="col-md-3 ">
+                                            Name:
+                                        </div>
+                                        <div class="col-md-9 ">
+                                            @list_contactsmain[0]
+                                        </div>
+                                    </div>
+
+                                    <br /><br />
+
+                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+                                        <div class="col-md-3 ">
+                                            Last Name:
+                                        </div>
+                                        <div class="col-md-9 ">
+                                            @list_contactsmain[1]
+                                        </div>
+                                    </div>
+                                    <br /><br />
+
+                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+                                        <div class="col-md-3 ">
+                                            Country:
+                                        </div>
+                                        <div class="col-md-9 ">
+                                            @list_contactsmain[5]
+                                        </div>
+                                    </div>
+                                    <br /><br />
+
+                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+                                        <div class="col-md-3 ">
+                                            Phone Number:
+                                        </div>
+                                        <div class="col-md-9 ">
+                                            @list_contactsmain[3] @list_contactsmain[4]
+                                        </div>
+                                    </div>
+                                    <br /><br />
+
+                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+                                        <div class="col-md-3 ">
+                                            Is Active:
+                                        </div>
+                                        <div class="col-md-9 ">
+                                            @list_contactsmain[2]
+                                        </div>
+                                    </div>
+                                    <br /><br />
+
+                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+                                        <div class="col-md-3 ">
+                                            Optin SMS:
+                                        </div>
+                                        <div class="col-md-9 ">
+                                            @list_contactsmain[6]
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-1" style="text-align: right;">
+                            <span onclick="$('#modalviewdetails').modal('hide'); $('#modalviewdetails').removeClass('show'); $('#modalviewdetails').css('display', 'none');" class="w3-button w3-display-topright" style="font-size: 20px;color: black;">
+                                X
+                            </span>
+                        </div>
+                    </div>
+
+
+
+
+                </div><!-- /.modal-content -->
+
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+</body>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $(function () {
+        $(".select2-multiple_1").select2({
+            allowClear: true,
+            placeholder: "Select option"
+        });
+    });
+
+    $(function () {
+        $(".select2-multiplethird_1").select2({
+            allowClear: true,
+            placeholder: "Select option/options"
+        });
+    });
+
+
+
+
+    $(function () {
+        $("#countriesselect").select2({
+            allowClear: true
+        });
+    });
+
+
+
+</script>

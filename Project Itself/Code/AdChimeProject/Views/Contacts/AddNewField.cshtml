@@ -1,0 +1,193 @@
+﻿
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+
+
+<head>
+    <style>
+        .formulariologin {
+            padding-top: 10px;
+        }
+
+        ::-webkit-input-placeholder {
+            color: red;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+            color: red;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: red;
+        }
+
+        :-ms-input-placeholder {
+            color: red;
+        }
+
+
+        .btncls {
+            background-color: #3A4F5E;
+            border: #2e6da4;
+            font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            color: #fff;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            border-radius: 4px;
+            line-height: 1.5;
+            text-decoration: none;
+            /*Transition*/
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+        }
+
+            .btncls:hover {
+                background-color: #87A2B6;
+                border: #2e6da4;
+                font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+                font-size: 15px;
+                color: #000;
+                letter-spacing: 1px;
+                padding: 8px 12px;
+                font-size: 14px;
+                font-weight: normal;
+                border-radius: 4px;
+                line-height: 1.5;
+                text-decoration: none;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="padding-top: 5%;">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px !important;">
+            <div class="modal-content" style="">
+                <div class="modal-body" style="padding-top: 0px; padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">
+                    <div class="row">
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-10">
+                            <p style="">
+                                <br /><strong>Fill all the data below to create a new field</strong>
+                            </p>
+
+                            <div class="row">
+
+                                <div name="myform" id="myform" style="width:100%;">
+
+                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px; text-align: center;">
+                                        <p style="font-size: 23px;font-weight: bold;">New Field</p>
+                                    </div>
+
+                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+                                        <label class="col-md-3 " for="irecipientetexto">Name for the field<br /></label>
+                                        <input type="text" name="nomefield" id="nomefield" class="col-md-9 form-control" required />
+                                    </div>
+
+                                    <br /><br />
+
+
+                                          <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+                                              <br /><br />
+                                              <label class="col-md-3 " for="fieldtype">Field Type<br /></label>
+                                              <select name="fieldtype" id="fieldtype" required class="col-md-9 form-control">
+                                                  <option value="text" selected>Text</option>
+                                                  <option value="num">Number</option>
+                                                  <option value="date">Date</option>
+                                              </select>
+                                          </div>
+
+
+                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px; padding-top: 20px;">
+                                        <button type="submit" class="btn btn-primary btn-block btn-lg submitar" value="Submit">Submit</button>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-1" style="text-align: right;">
+                            <span onclick="$('#modaladdnewfield').modal('hide'); $('#modaladdnewfield').removeClass('show'); $('#modaladdnewfield').css('display', 'none');" class="w3-button w3-display-topright" style="font-size: 20px;color: black;">
+                                X
+                            </span>
+                        </div>
+                    </div>
+
+
+
+
+                </div><!-- /.modal-content -->
+
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+</body>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $(function () {
+        $(".select2-multiple_1").select2({
+            allowClear: true,
+            placeholder: "Select option"
+        });
+    });
+
+    $(function () {
+        $(".select2-multiplethird_1").select2({
+            allowClear: true,
+            placeholder: "Select option/options"
+        });
+    });
+
+
+
+
+    $(function () {
+        $("#countriesselect").select2({
+            allowClear: true
+        });
+    });
+
+
+    $(function () {
+
+            var form = document.getElementById("myform");
+        $(".submitar").click(function () {
+
+            var namefield = document.getElementById("nomefield").value;
+            var fieldtype = document.getElementById("fieldtype").value;
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AddNewField", "Contacts")",
+                    data: { nameoffield: idrecipient, fieldtype: fieldtype },
+                    dataType: "json",
+                    success: function (data) {
+                        window.location.href = data;
+                    }
+                });
+
+
+            });
+        })
+
+
+
+</script>
