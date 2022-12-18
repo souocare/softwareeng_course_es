@@ -33,6 +33,14 @@
           <Property Name="updatedate" Type="datetime" />
           <Property Name="updatedbyuser" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="sLinks">
+          <Key>
+            <PropertyRef Name="idlink" />
+          </Key>
+          <Property Name="idlink" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sOriginalLink" Type="varchar(max)" />
+          <Property Name="sShorterLink" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tCampaign">
           <Key>
             <PropertyRef Name="idcampaign" />
@@ -60,6 +68,8 @@
           <Property Name="bSucess" Type="bit" />
           <Property Name="nEnvio" Type="int" />
           <Property Name="sDatetoSend" Type="datetime" />
+          <Property Name="idlink" Type="int" />
+          <Property Name="sShorterLink" Type="varchar" MaxLength="50" />
           <Property Name="sSendbyWho" Type="varchar" MaxLength="100" />
           <Property Name="insertdate" Type="datetime" />
         </EntityType>
@@ -82,6 +92,13 @@
           <Property Name="insertdate" Type="datetime" />
           <Property Name="updatedate" Type="datetime" />
           <Property Name="updatedbyuser" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tSMSCounter">
+          <Key>
+            <PropertyRef Name="idcounter" />
+          </Key>
+          <Property Name="idcounter" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Counter" Type="int" />
         </EntityType>
         <EntityType Name="tTemplateSms">
           <Key>
@@ -217,10 +234,12 @@
         <EntityContainer Name="AdChimeProejctModelStoreContainer">
           <EntitySet Name="panelContacts" EntityType="Self.panelContacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="panelContactsVariables" EntityType="Self.panelContactsVariables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sLinks" EntityType="Self.sLinks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tCampaign" EntityType="Self.tCampaign" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tCampaignSend" EntityType="Self.tCampaignSend" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tRecipientNumbers" EntityType="Self.tRecipientNumbers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tRecipientSms" EntityType="Self.tRecipientSms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tSMSCounter" EntityType="Self.tSMSCounter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tTemplateSms" EntityType="Self.tTemplateSms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tUsers" EntityType="Self.tUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tVarContacts" EntityType="Self.tVarContacts" Schema="dbo" store:Type="Tables" />
@@ -327,6 +346,8 @@
           <Property Name="insertdate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tCampaign" Relationship="Self.FK_tCampaignSend_tCampaign" FromRole="tCampaignSend" ToRole="tCampaign" />
           <NavigationProperty Name="tRecipientSm" Relationship="Self.FK_tCampaignSend_tRecipientSms" FromRole="tCampaignSend" ToRole="tRecipientSms" />
+          <Property Name="idlink" Type="Int32" />
+          <Property Name="sShorterLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tRecipientNumber">
           <Key>
@@ -492,6 +513,8 @@
             <End Role="tVarContact" EntitySet="tVarContacts" />
             <End Role="panelContactsVariable" EntitySet="panelContactsVariables" />
           </AssociationSet>
+          <EntitySet Name="sLinks" EntityType="AdChimeProejctModel.sLink" />
+          <EntitySet Name="tSMSCounters" EntityType="AdChimeProejctModel.tSMSCounter" />
         </EntityContainer>
         <EntityType Name="tUser">
           <Key>
@@ -529,6 +552,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="sLink">
+          <Key>
+            <PropertyRef Name="idlink" />
+          </Key>
+          <Property Name="idlink" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sOriginalLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sShorterLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tSMSCounter">
+          <Key>
+            <PropertyRef Name="idcounter" />
+          </Key>
+          <Property Name="idcounter" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Counter" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -585,6 +623,8 @@
           <EntitySetMapping Name="tCampaignSends">
             <EntityTypeMapping TypeName="AdChimeProejctModel.tCampaignSend">
               <MappingFragment StoreEntitySet="tCampaignSend">
+                <ScalarProperty Name="sShorterLink" ColumnName="sShorterLink" />
+                <ScalarProperty Name="idlink" ColumnName="idlink" />
                 <ScalarProperty Name="idEnvioEmail" ColumnName="idEnvioEmail" />
                 <ScalarProperty Name="idcampaing" ColumnName="idcampaing" />
                 <ScalarProperty Name="tEmailtoGroup" ColumnName="tEmailtoGroup" />
@@ -654,6 +694,23 @@
                 <ScalarProperty Name="VarName" ColumnName="VarName" />
                 <ScalarProperty Name="visible" ColumnName="visible" />
                 <ScalarProperty Name="idVar" ColumnName="idVar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sLinks">
+            <EntityTypeMapping TypeName="AdChimeProejctModel.sLink">
+              <MappingFragment StoreEntitySet="sLinks">
+                <ScalarProperty Name="sShorterLink" ColumnName="sShorterLink" />
+                <ScalarProperty Name="sOriginalLink" ColumnName="sOriginalLink" />
+                <ScalarProperty Name="idlink" ColumnName="idlink" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tSMSCounters">
+            <EntityTypeMapping TypeName="AdChimeProejctModel.tSMSCounter">
+              <MappingFragment StoreEntitySet="tSMSCounter">
+                <ScalarProperty Name="Counter" ColumnName="Counter" />
+                <ScalarProperty Name="idcounter" ColumnName="idcounter" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

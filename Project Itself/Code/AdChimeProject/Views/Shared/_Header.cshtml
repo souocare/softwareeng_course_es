@@ -20,12 +20,20 @@
 
                             <nav>
                                 <ul id="navigation">
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
 
                                         @Html.Partial("_LoginPartial")
                                     </div>
+                                    <div class="col-md-2" style="color:black;margin-top:15px;">
+                                        <div class="progress" style="height:2rem !important">
+                                            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                                                 aria-valuenow="@Html.Raw(Session["valuenow"])" aria-valuemin="0" aria-valuemax="5000" style="width:@Html.Raw(Session["percentage"])">
+                                                @Html.Raw(Session["text"])
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                    <div class="col-md-3" style="margin-top:15px;">
+                                    <div class="col-md-2" style="margin-top:15px;">
                                         <span class="welcomenameuser">Welcome @Session["Nome"]</span>
 
                                     </div>

@@ -34,5 +34,7 @@ namespace AdChimeProject
         public virtual DbSet<tTemplateSm> tTemplateSms { get; set; }
         public virtual DbSet<tUser> tUsers { get; set; }
         public virtual DbSet<tVarContact> tVarContacts { get; set; }
+        public virtual DbSet<sLink> sLinks { get; set; }
+        public virtual DbSet<tSMSCounter> tSMSCounters { get; set; }
     }
 }

@@ -1,8 +1,15 @@
-﻿using PagedList;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -151,6 +158,48 @@ namespace AdChimeProject.Controllers
         {
 
             return View(dbadchime.tTemplateSms.Where(x => x.isaproved == true).OrderByDescending(x => x.updatedate).ToList().ToPagedList(page ?? 1, 20));
+        }
+
+        [HttpPost]
+        public string GenerateLink(string link)
+        {
+            string urlEncurtada = string.Empty;   // armazena a url encurtada
+            using (var httpClient = new HttpClient())
+            {
+                using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://api-ssl.bitly.com/v4/shorten"))
+                {
+                    request.Headers.TryAddWithoutValidation("Authorization", "Bearer 8e8ad4283419b1cd388dfafe9f3884b3fb90af19");
+
+                    request.Content = new StringContent("{\n  \"long_url\": \"" + link + "\",\n  \"domain\": \"bit.ly\"\n}");
+                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+
+                    var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = response.Content;
+
+                        var fdsfdsf = responseContent.ReadAsStringAsync().GetAwaiter().GetResult().ToString();
+                        JObject s = JObject.Parse(fdsfdsf);
+                        string finallink = (string)s["link"];
+
+                        sLink newlink = new sLink
+                        {
+                            sOriginalLink = link,
+                            sShorterLink = finallink
+                        };
+                        dbadchime.sLinks.Add(newlink);
+                        dbadchime.SaveChanges();
+
+                        var getidlink = dbadchime.sLinks.Where(x => x.sShorterLink == finallink).Select(x => x.idlink).FirstOrDefault().ToString();
+
+
+                        return "{\"id\":\"" + getidlink + "\", \"linkfinal\":\"" + finallink + "\"}";
+                    }
+                }
+            }
+
+            return "{\"id\":\"" + "0" + "\", \"linkfinal\":\"" + "ERRO, TENTE NOVAMENTE" + "\"}";
+            //return RedirectToAction(model.DesignId, "Prdocut/Edit");       
         }
     }
 }

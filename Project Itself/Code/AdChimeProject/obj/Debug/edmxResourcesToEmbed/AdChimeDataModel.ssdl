@@ -28,6 +28,14 @@
     <Property Name="updatedate" Type="datetime" />
     <Property Name="updatedbyuser" Type="varchar" MaxLength="100" />
   </EntityType>
+  <EntityType Name="sLinks">
+    <Key>
+      <PropertyRef Name="idlink" />
+    </Key>
+    <Property Name="idlink" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="sOriginalLink" Type="varchar(max)" />
+    <Property Name="sShorterLink" Type="varchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="tCampaign">
     <Key>
       <PropertyRef Name="idcampaign" />
@@ -55,6 +63,8 @@
     <Property Name="bSucess" Type="bit" />
     <Property Name="nEnvio" Type="int" />
     <Property Name="sDatetoSend" Type="datetime" />
+    <Property Name="idlink" Type="int" />
+    <Property Name="sShorterLink" Type="varchar" MaxLength="50" />
     <Property Name="sSendbyWho" Type="varchar" MaxLength="100" />
     <Property Name="insertdate" Type="datetime" />
   </EntityType>
@@ -77,6 +87,13 @@
     <Property Name="insertdate" Type="datetime" />
     <Property Name="updatedate" Type="datetime" />
     <Property Name="updatedbyuser" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tSMSCounter">
+    <Key>
+      <PropertyRef Name="idcounter" />
+    </Key>
+    <Property Name="idcounter" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Counter" Type="int" />
   </EntityType>
   <EntityType Name="tTemplateSms">
     <Key>
@@ -212,10 +229,12 @@
   <EntityContainer Name="AdChimeProejctModelStoreContainer">
     <EntitySet Name="panelContacts" EntityType="Self.panelContacts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="panelContactsVariables" EntityType="Self.panelContactsVariables" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sLinks" EntityType="Self.sLinks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tCampaign" EntityType="Self.tCampaign" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tCampaignSend" EntityType="Self.tCampaignSend" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tRecipientNumbers" EntityType="Self.tRecipientNumbers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tRecipientSms" EntityType="Self.tRecipientSms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tSMSCounter" EntityType="Self.tSMSCounter" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tTemplateSms" EntityType="Self.tTemplateSms" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tUsers" EntityType="Self.tUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tVarContacts" EntityType="Self.tVarContacts" Schema="dbo" store:Type="Tables" />

@@ -66,6 +66,8 @@
     <Property Name="insertdate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="tCampaign" Relationship="Self.FK_tCampaignSend_tCampaign" FromRole="tCampaignSend" ToRole="tCampaign" />
     <NavigationProperty Name="tRecipientSm" Relationship="Self.FK_tCampaignSend_tRecipientSms" FromRole="tCampaignSend" ToRole="tRecipientSms" />
+    <Property Name="idlink" Type="Int32" />
+    <Property Name="sShorterLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="tRecipientNumber">
     <Key>
@@ -231,6 +233,8 @@
       <End Role="tVarContact" EntitySet="tVarContacts" />
       <End Role="panelContactsVariable" EntitySet="panelContactsVariables" />
     </AssociationSet>
+    <EntitySet Name="sLinks" EntityType="AdChimeProejctModel.sLink" />
+    <EntitySet Name="tSMSCounters" EntityType="AdChimeProejctModel.tSMSCounter" />
   </EntityContainer>
   <EntityType Name="tUser">
     <Key>
@@ -268,4 +272,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="sLink">
+    <Key>
+      <PropertyRef Name="idlink" />
+    </Key>
+    <Property Name="idlink" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sOriginalLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="sShorterLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tSMSCounter">
+    <Key>
+      <PropertyRef Name="idcounter" />
+    </Key>
+    <Property Name="idcounter" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Counter" Type="Int32" />
+  </EntityType>
 </Schema>

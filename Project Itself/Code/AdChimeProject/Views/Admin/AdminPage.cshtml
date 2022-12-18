@@ -1,7 +1,70 @@
 ﻿
-@{
-    ViewBag.Title = "AdminPage";
-}
+@{ ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 
-<h2>AdminPage</h2>
+
+<!-- slider_area_end -->
+<!-- about_area_start -->
+<div style="margin-top:20px;">
+    <div>
+        <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-12" style="padding-left: 10px;">
+                    <a href="@Url.Action("ManageLogin", "Admin", null)" style="text-decoration:none;">
+                        <img src="~/Content/Images/MyLists.png" style="width: 30px;" /> <span style="color:#999999;">Manage Logins</span>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("LoadSMSBalance", "Admin", null)" style="text-decoration:none;">
+                        <img src="~/Content/Images/AddNew.png" style="width: 30px;" /> <span style="color:#999999;">Add SMS Balance</span>
+                    </a>
+                    <br /><br />
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-1">
+
+                    <p style="color:#E10028;">Admin Page</p>
+                </div>
+                <div class="col-md-11">
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+                <div class="col-md-10 col-sm-12">
+                    <br /><br />
+                    <p>
+                        Welcome to the Admin page! Select above what action you want to do.
+                    </p>
+                    <br /><br />
+                </div>
+
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<!-- about_area_end -->
+<br />
+<br />
 

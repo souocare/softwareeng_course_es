@@ -254,12 +254,10 @@ namespace AdChimeProject.Controllers
 
         public ActionResult DetailsContacts(int idcontact)
         {
-            var result = dbadchime.panelContacts.Where(x => x.idContact == idcontact)
-                  .Select(c => new { c.Name, c.LastName, c.bActive, c.CountryCodePhone, c.PhoneNumber, c.Country, c.optinSMS })
-                  .ToList();
+            var result = dbadchime.panelContacts.Where(x => x.idContact == idcontact).ToList();
             ViewData["ContactMain"] = result;
 
-            return View();
+            return View(result);
         }
 
 

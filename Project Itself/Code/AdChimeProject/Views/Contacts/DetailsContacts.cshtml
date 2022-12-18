@@ -2,12 +2,14 @@
 @{
     ViewBag.Title = "Log in";
     Layout = null;
-    var list_contactsmain = (List<string>)ViewData["ContactMain"];
 }
 
+@model IList<AdChimeProject.panelContact>
 
 
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         .formulariologin {
             padding-top: 10px;
@@ -78,77 +80,55 @@
 
                         </div>
                         <div class="col-md-10">
+                            @foreach (var con in Model)
+                            {
+                                <div class="row">
 
-                            <div class="row">
 
-                                <div style="width:100%;">
-
-                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
-                                        <div class="col-md-3 ">
-                                            Name:
-                                        </div>
-                                        <div class="col-md-9 ">
-                                            @list_contactsmain[0]
-                                        </div>
+                                    <div style="overflow-x: scroll;width: 100%;">
+                                        
+                                        <p style="font-size: 23px; font-weight: bold; text-align: center; margin-top: 10px;">Contact Info</p>
+                                        <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-bottom: 1rem; color: #212529;">
+                                            <thead style=" display: table-header-group; vertical-align: middle; border-color: inherit;">
+                                                <tr style=" display: table-row; vertical-align: inherit; border-color: inherit;">
+                                                    <th style="color: #fff; background-color: #343a40; border-color: #454d55;border: none;padding: 15px; font-size: 14px;vertical-align: bottom;">Variable</th>
+                                                    <th style="color: #fff; background-color: #343a40; border-color: #454d55;border: none;padding: 15px; font-size: 14px;vertical-align: bottom;">Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style=" display: table-row-group; vertical-align: middle; border-color: inherit;">
+                                                <tr style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                                                    <th style=" border: none; padding: 15px; font-size: 14px; background: #fff;vertical-align: top;">Name</th>
+                                                    <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;">@con.Name</td>
+                                                </tr>
+                                                <tr  style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                                                    <th  style=" border: none; padding: 15px; font-size: 14px; background: #fff;vertical-align: top;">Last Name</th>
+                                                    <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;">@con.LastName</td>
+                                                </tr>
+                                                <tr  style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                                                    <th  style=" border: none; padding: 15px; font-size: 14px; background: #fff;vertical-align: top;">Country</th>
+                                                    <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;">@con.Country</td>
+                                                </tr>
+                                                <tr  style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                                                    <th  style=" border: none; padding: 15px; font-size: 14px; background: #fff;vertical-align: top;">Phone Number</th>
+                                                    <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;">@con.CountryCodePhone @con.PhoneNumber</td>
+                                                </tr>
+                                                <tr  style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                                                    <th  style=" border: none; padding: 15px; font-size: 14px; background: #fff;vertical-align: top;">Is Active:</th>
+                                                    <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;">@con.bActive</td>
+                                                </tr>
+                                                <tr  style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                                                    <th  style=" border: none; padding: 15px; font-size: 14px; background: #fff;vertical-align: top;">Optin SMS:</th>
+                                                    <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;">@con.optinSMS</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-
-                                    <br /><br />
-
-                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
-                                        <div class="col-md-3 ">
-                                            Last Name:
-                                        </div>
-                                        <div class="col-md-9 ">
-                                            @list_contactsmain[1]
-                                        </div>
-                                    </div>
-                                    <br /><br />
-
-                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
-                                        <div class="col-md-3 ">
-                                            Country:
-                                        </div>
-                                        <div class="col-md-9 ">
-                                            @list_contactsmain[5]
-                                        </div>
-                                    </div>
-                                    <br /><br />
-
-                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
-                                        <div class="col-md-3 ">
-                                            Phone Number:
-                                        </div>
-                                        <div class="col-md-9 ">
-                                            @list_contactsmain[3] @list_contactsmain[4]
-                                        </div>
-                                    </div>
-                                    <br /><br />
-
-                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
-                                        <div class="col-md-3 ">
-                                            Is Active:
-                                        </div>
-                                        <div class="col-md-9 ">
-                                            @list_contactsmain[2]
-                                        </div>
-                                    </div>
-                                    <br /><br />
-
-                                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
-                                        <div class="col-md-3 ">
-                                            Optin SMS:
-                                        </div>
-                                        <div class="col-md-9 ">
-                                            @list_contactsmain[6]
-                                        </div>
-                                    </div>
-
-
 
 
                                 </div>
+                            }
 
-                            </div>
+
 
 
                         </div>
@@ -168,6 +148,11 @@
         </div><!-- /.modal-dialog -->
     </div>
 
+
+    <script src="~/Content/js_m/partialviewtable/jquery.min.js"></script>
+    <script src="~/Content/js_m/partialviewtable/popper.js"></script>
+    <script src="~/Content/js_m/partialviewtable/bootstrap.min.js"></script>
+    <script src="~/Content/js_m/partialviewtable/tablepartialview.js"></script>
 </body>
 
 @section Scripts {

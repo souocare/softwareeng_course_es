@@ -31,6 +31,7 @@ namespace AdChimeProject.Controllers
 
         public ActionResult Index()
         {
+            Session["percentage"] = "0%";
             return View();
         }
 
@@ -53,6 +54,28 @@ namespace AdChimeProject.Controllers
                 var adfsdf = GetStringSha256Hash(model.Password);
                 if ( GetStringSha256Hash(model.Password).ToString() == user_check.Password.ToString())
                 {
+                    try
+                    {
+                        var numerodemsgs = Int32.Parse(dbadchime.tSMSCounters.Where(x => x.idcounter == 1).Select(x => x.Counter).FirstOrDefault().ToString());
+                        Session["valuenow"] = numerodemsgs.ToString();
+                        Session["text"] = numerodemsgs.ToString() + " available SMS's";
+                        if (numerodemsgs / 5000 > 1)
+                        {
+                            Session["percentage"] = "100%";
+                        } else
+                        {
+                            Session["percentage"] = ((numerodemsgs / 5000) * 100).ToString() + "%";
+                        }
+                        
+
+                    }
+                    catch
+                    {
+                        Session["valuenow"] = "5000";
+                        Session["text"] = "ERROR GETTING THE MESSAGES";
+                        Session["percentage"] = "100%";
+                    }
+
                     Session["idlogin"] = user_check.iDLogin.ToString();
                     Session["email"] = user_check.Email.ToString();
                     Session["isadmin"] = user_check.isadmin.ToString();

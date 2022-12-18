@@ -1,0 +1,159 @@
+﻿
+@{ ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@model IList<AdChimeProject.tUser>
+
+<!-- slider_area_end -->
+<!-- about_area_start -->
+<div style="margin-top:20px;">
+    <div>
+        <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-12" style="padding-left: 10px;">
+                    <a href="@Url.Action("ManageLogin", "Admin", null)" style="text-decoration:none;">
+                        <img src="~/Content/Images/AddNew.png" style="width: 30px;" /> <span style="color:#999999;">Manage Logins</span>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("LoadSMSBalance", "Admin", null)" style="text-decoration:none;">
+                        <img src="~/Content/Images/MyLists.png" style="width: 30px;" /> <span style="color:#E10028;">Add SMS Balance</span>
+                    </a>
+                    <br /><br />
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-1">
+
+                    <p style="color:#E10028;">Add New User</p>
+                </div>
+                <div class="col-md-11">
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+                <div class="col-md-10 col-sm-12" style=" text-align: center; ">
+                    <div class="row">
+                        <p style="font-size: 23px; font-weight: bold; text-align: center; margin-top: 10px;">Create New User<br /></p>
+                        
+
+
+                    </div>
+
+                    <div class="row" style="width: 100%;">
+
+                        <form action="EditUser" method="post" style="width: 50%;">
+                            <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-bottom: 1rem; color: #212529;">
+                                <thead style=" display: table-header-group; vertical-align: middle; border-color: inherit;">
+                                    <tr style=" display: table-row; vertical-align: inherit; border-color: inherit;">
+                                        <th style="color: #fff; background-color: #343a40; border-color: #454d55;border: none;padding: 15px; font-size: 14px;vertical-align: bottom;">Variable</th>
+                                        <th style="color: #fff; background-color: #343a40; border-color: #454d55;border: none;padding: 15px; font-size: 14px;vertical-align: bottom;    width: 60%;">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody style=" display: table-row-group; vertical-align: middle; border-color: inherit;">
+                                    <tr style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                                        <th style=" border: none; padding: 15px; font-size: 14px; background: #fff;vertical-align: top;">Name</th>
+                                        <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;"><input type="text" name="name" required style=" width: 100%; " /></td>
+                                    </tr>
+
+
+                                    <tr style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                                        <th style=" border: none; padding: 15px; font-size: 14px; background: #fff;vertical-align: top;">Email</th>
+                                        <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;"><input type="email" name="email" required style=" width: 100%; " /></td>
+                                    </tr>
+
+
+                                    <tr style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                                        <th style=" border: none; padding: 15px; font-size: 14px; background: #fff;vertical-align: top;">Password</th>
+                                        <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;"><input type="password" name="password" required style=" width: 100%; " /></td>
+                                    </tr>
+
+
+                                    <tr style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                                        <th style=" border: none; padding: 15px; font-size: 14px; background: #fff;vertical-align: top;">Is Admin?</th>
+                                        <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;"><input type="checkbox" name="isadmin" /></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<!-- about_area_end -->
+<br />
+<br />
+
+
+<div id="modalvieweditcontact" class="modal fade" data-backdrop="false" role="dialog" style="margin-top: 0px; background-color: rgba(239, 122, 143, 0.7);/*! opacity: 0.5; */"></div>
+
+
+@section scripts{
+    <script>
+        window.onload = function () {
+            $('.modal-backdrop').remove();
+        }</script>
+
+
+
+    <script>
+        window.addEventListener('click', function (event) {
+
+            if (event.target.id == "modalvieweditcontact") {
+                $("#modalvieweditcontact").hide();
+                $('#modalvieweditcontact').modal('hide');
+                $("#modalvieweditcontact").removeClass("show");
+                $("#modalvieweditcontact").css("display", "none");
+            }
+        });
+
+
+
+        $(function () {
+
+
+            $('#buttoneditcontact').bind('click', function () {
+                var whatever = $(this).data('whatever');
+                $("#modalviewdetails").load("/Admin/EditUser?iduser=" + whatever, function () {
+                    $("#modalviewdetails").modal();
+                    $("#modalviewdetails").addClass("show");
+                    $("#modalviewdetails").css("display", "block");
+                })
+            });
+
+
+
+        })
+
+    </script>
+
+}
+

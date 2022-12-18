@@ -1,7 +1,145 @@
 ﻿
-@{
-    ViewBag.Title = "ManageLogin";
-}
+@{ ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 
-<h2>ManageLogin</h2>
+
+@model IList<AdChimeProject.tUser>
+
+<!-- slider_area_end -->
+<!-- about_area_start -->
+<div style="margin-top:20px;">
+    <div>
+        <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-12" style="padding-left: 10px;">
+                    <a href="@Url.Action("AddUser", "Admin", null)" style="text-decoration:none;">
+                        <img src="~/Content/Images/AddNew.png" style="width: 30px;" /> <span style="color:#999999;">Add New User</span>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("LoadSMSBalance", "Admin", null)" style="text-decoration:none;">
+                        <img src="~/Content/Images/MyLists.png" style="width: 30px;" /> <span style="color:#E10028;">Add SMS Balance</span>
+                    </a>
+                    <br /><br />
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-1">
+
+                    <p style="color:#E10028;">Manage Users</p>
+                </div>
+                <div class="col-md-11">
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+                <div class="col-md-10 col-sm-12" style=" text-align: center; ">
+                    <div class="row">
+
+
+                        <div style="overflow-x: scroll;width: 100%;">
+
+                            <p style="font-size: 23px; font-weight: bold; text-align: center; margin-top: 10px;">Contact Info</p>
+                            <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-bottom: 1rem; color: #212529;">
+                                <thead style=" display: table-header-group; vertical-align: middle; border-color: inherit;">
+                                    <tr style=" display: table-row; vertical-align: inherit; border-color: inherit;">
+                                        <th style="color: #fff; background-color: #343a40; border-color: #454d55;border: none;padding: 15px; font-size: 14px;vertical-align: bottom;">Name</th>
+                                        <th style="color: #fff; background-color: #343a40; border-color: #454d55;border: none;padding: 15px; font-size: 14px;vertical-align: bottom;">Email</th>
+                                        <th style="color: #fff; background-color: #343a40; border-color: #454d55;border: none;padding: 15px; font-size: 14px;vertical-align: bottom;">isAdmin</th>
+                                        <th style="color: #fff; background-color: #343a40; border-color: #454d55;border: none;padding: 15px; font-size: 14px;vertical-align: bottom;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody style=" display: table-row-group; vertical-align: middle; border-color: inherit;">
+                                    @foreach (var con in Model)
+                                    {
+                        <tr style="margin-bottom: 10px;box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);position: relative; border: 1px solid transparent; border-radius: 0.25rem; ">
+                            <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;">@con.Email</td>
+                            <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;">@con.Name</td>
+                            <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;">@con.isadmin</td>
+                            <td style=" border: none; padding: 15px; font-size: 14px; background: #fff; vertical-align:top;"><button data-whatever="@con.idUser" id='buttoneditcontact'><img src="~/Content/Images/editlogo.png" style="width: 30px;" /></button></td>
+
+                        </tr>
+}
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-1 col-sm-12">
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<!-- about_area_end -->
+<br />
+<br />
+
+
+<div id="modalvieweditcontact" class="modal fade" data-backdrop="false" role="dialog" style="margin-top: 0px; background-color: rgba(239, 122, 143, 0.7);/*! opacity: 0.5; */"></div>
+
+
+@section scripts{
+    <script>
+        window.onload = function () {
+            $('.modal-backdrop').remove();
+        }</script>
+
+
+
+    <script>
+        window.addEventListener('click', function (event) {
+
+            if (event.target.id == "modalvieweditcontact") {
+                $("#modalvieweditcontact").hide();
+                $('#modalvieweditcontact').modal('hide');
+                $("#modalvieweditcontact").removeClass("show");
+                $("#modalvieweditcontact").css("display", "none");
+            }
+        });
+
+
+
+        $(function () {
+
+
+            $('#buttoneditcontact').bind('click', function () {
+                var whatever = $(this).data('whatever');
+                $("#modalvieweditcontact").load("/Admin/EditUser?iduser=" + whatever, function () {
+                    $("#modalvieweditcontact").modal();
+                    $("#modalvieweditcontact").addClass("show");
+                    $("#modalvieweditcontact").css("display", "block");
+                })
+            });
+
+
+
+        })
+
+    </script>
+
+}
 

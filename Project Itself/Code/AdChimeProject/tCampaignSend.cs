@@ -23,6 +23,8 @@ namespace AdChimeProject
         public Nullable<System.DateTime> sDatetoSend { get; set; }
         public string sSendbyWho { get; set; }
         public Nullable<System.DateTime> insertdate { get; set; }
+        public Nullable<int> idlink { get; set; }
+        public string sShorterLink { get; set; }
     
         public virtual tCampaign tCampaign { get; set; }
         public virtual tRecipientSm tRecipientSm { get; set; }

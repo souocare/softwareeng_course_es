@@ -166,6 +166,9 @@
       <DependentUpon>AdChimeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sLink.cs">
+      <DependentUpon>AdChimeDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tCampaign.cs">
       <DependentUpon>AdChimeDataModel.tt</DependentUpon>
     </Compile>
@@ -176,6 +179,9 @@
       <DependentUpon>AdChimeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tRecipientSm.cs">
+      <DependentUpon>AdChimeDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tSMSCounter.cs">
       <DependentUpon>AdChimeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tTemplateSm.cs">
@@ -216,6 +222,8 @@
     <Content Include="Content\css_m\magnific-popup.css" />
     <Content Include="Content\css_m\nice-select.css" />
     <Content Include="Content\css_m\owl.carousel.min.css" />
+    <Content Include="Content\css_m\partialviewtable\bootstrap.min.css" />
+    <Content Include="Content\css_m\partialviewtable\tablepartialview.css" />
     <Content Include="Content\css_m\slicknav.css" />
     <Content Include="Content\css_m\style.css" />
     <Content Include="Content\css_m\stylelogin.css" />
@@ -225,6 +233,9 @@
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\10000sms.png" />
+    <Content Include="Content\Images\1000sms.png" />
+    <Content Include="Content\Images\5000sms.png" />
     <Content Include="Content\Images\adchime_logo.png" />
     <Content Include="Content\Images\addentry.png" />
     <Content Include="Content\Images\AddNew.png" />
@@ -256,6 +267,10 @@
     <Content Include="Content\js_m\modernizr-3.5.0.min.js" />
     <Content Include="Content\js_m\nice-select.min.js" />
     <Content Include="Content\js_m\owl.carousel.min.js" />
+    <Content Include="Content\js_m\partialviewtable\bootstrap.min.js" />
+    <Content Include="Content\js_m\partialviewtable\jquery.min.js" />
+    <Content Include="Content\js_m\partialviewtable\tablepartialview.js" />
+    <Content Include="Content\js_m\partialviewtable\popper.js" />
     <Content Include="Content\js_m\plugins.js" />
     <Content Include="Content\js_m\popper.min.js" />
     <Content Include="Content\js_m\scrollIt.js" />
@@ -387,6 +402,8 @@
     <Content Include="Views\Admin\AdminPage.cshtml" />
     <Content Include="Views\Admin\ManageLogin.cshtml" />
     <Content Include="Views\Admin\LoadSMSBalance.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

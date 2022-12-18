@@ -105,7 +105,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label" for="Name">Send Date 2</label>
+                                            <label class="col-md-3 control-label" for="Name">Send Date</label>
                                             <div class="col-md-7" style="padding-top: 4px; padding-right: 0px;">
                                                 @Html.TextBoxFor(m => m.sDatetoSend, new { @class = "form-control datepicker", @required = "required", @autocomplete = "off", @style = "width: 95%;", placeholder = "Click here to select a date and time" })
                                                 @Html.ValidationMessageFor(m => m.sDatetoSend, "", new { @class = "text-danger" })
@@ -116,8 +116,39 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group" id="longlink">
+                                            <label class="col-md-3 control-label" for="Name">Original Link</label>
+                                            <div class="col-md-7" style="padding-top: 4px; padding-right: 0px;">
+                                                <input autocomplete="off" class="form-control" id="originallink" name="originallink" placeholder="Click here to select a date and time" required="required" style="width: 95%;" type="text" value="">
+
+                                            </div>
+                                            <div class="col-md-2" style="padding-top: 2px; padding-left: 2px; padding-right: 2px; ">
+                                                <button class="button-3333" role="button" onclick="GenerateLink();">Generate Short Link</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" id="shortlink" style="display: none;">
+                                            <label class="col-md-3 control-label" for="Name">Short Link</label>
+                                            <div class="col-md-7" style="padding-top: 4px; padding-right: 0px;">
+                                                @Html.TextBoxFor(m => m.sShorterLink, new { @class = "form-control", @required = "required", @autocomplete = "off", @style = "width: 95%;", placeholder = "" })
+                                                @Html.ValidationMessageFor(m => m.sShorterLink, "", new { @class = "text-danger" })
+
+                                            </div>
+                                            <div class="col-md-2" style="padding-top: 2px; padding-left: 2px; padding-right: 2px; ">
+                                            </div>
+                                        </div>
 
 
+
+                                        <div class="form-group" id="shortlinkid" style="display: none;">
+                                            <label class="col-md-3 control-label" for="Name">Short Link</label>
+                                            <div class="col-md-7" style="padding-top: 4px; padding-right: 0px;">
+                                                @Html.TextBoxFor(m => m.idlink, new { @class = "form-control", @required = "required", @autocomplete = "off", @style = "width: 95%;", placeholder = "", @Value = "0" })
+
+                                            </div>
+                                            <div class="col-md-2" style="padding-top: 2px; padding-left: 2px; padding-right: 2px; ">
+                                            </div>
+                                        </div>
 
 
                                     </div>
@@ -125,7 +156,7 @@
                                 <div class="modal-footer">
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-10">
-                                            <input type="submit" value="Send" class="btn btn-primary" />
+                                            <input type="submit" value="Send" class="btn btn-primary" onclick="return submitformu();" />
                                             <input type="button" value="Cancel" class="btn btn-danger" data-dismiss="modal" />
                                         </div>
                                     </div>
@@ -152,11 +183,19 @@
 
 </body>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
 
 <script>
+    function submitformu() {
+        var linkcheck = document.getElementById("sShorterLink").value;
+        if (linkcheck == "ERRO, TENTE NOVAMENTE") {
+            alert("Verifique o link que colocou. O link final tem um erro.")
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     $('#exportarexemplo').click(function () {
    var url = '@Url.Action("Download", "ToolEmailRecipients")';
 
@@ -172,29 +211,54 @@
 
 
 <script>
+    function GenerateLink() {
+        var orglink = document.getElementById("originallink").value;
+        if (orglink == null || orglink == "") {
+            alert("Please, insert the link on the box to generate the short link");
+        }
+            $.ajax({
+                url: "@Url.Action("GenerateLink", "Campaigns")",
+                data: { link: orglink },
+                type: "POST",
+                success: function (data) {
+                    var datafinal = JSON.parse(data);
+                    if (datafinal.linkfinal == "ERRO, TENTE NOVAMENTE") {
+                        $('#sShorterLink').val(data);
+                    } else {
+                        $('#sShorterLink').val(datafinal.linkfinal);
+                        $('#idlink').val(datafinal.id);
+                    }
+                    $('#shortlink').css('display', '');
+                },
+                error: function (error) {
+                    //TODO: Add some code here for error handling or notifications
+                }
+            });
+        };
 
-    $(function () {
-        var date = new Date();
-        $(".datepicker").datetimepicker({
-            dateFormat: "yy/mm/dd",
-            changeMonth: true,
-            changeYear: true,
-            //yearRange : "-10:+10"
-            minDate: date,
-            changeMonth: true,
-            changeYear: true,
-            "showButtonPanel": false,
-            buttonText: "",
-            showSecond: false,
-            showMillisec: false,
-            showMicrosec: false,
-            showTimezone: false,
-            startTime: date.setHours(date.getHours() + 1)
-        });
-        document.getElementsByClassName('ui-datepicker-trigger')[0].style.visibility = "hidden";
-        document.getElementById('showthisbutton').style.visibility = "visible";
 
-    });
+        $(function () {
+                var date = new Date();
+                $(".datepicker").datetimepicker({
+                    dateFormat: "yy/mm/dd",
+                    changeMonth: true,
+                    changeYear: true,
+                    //yearRange : "-10:+10"
+                    minDate: date,
+                    changeMonth: true,
+                    changeYear: true,
+                    "showButtonPanel": false,
+                    buttonText: "",
+                    showSecond: false,
+                    showMillisec: false,
+                    showMicrosec: false,
+                    showTimezone: false,
+                    startTime: date.setHours(date.getHours() + 1)
+                });
+                document.getElementsByClassName('ui-datepicker-trigger')[0].style.visibility = "hidden";
+                document.getElementById('showthisbutton').style.visibility = "visible";
+
+            });
 </script>
 
 

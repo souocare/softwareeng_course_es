@@ -51,6 +51,8 @@
     <EntitySetMapping Name="tCampaignSends">
       <EntityTypeMapping TypeName="AdChimeProejctModel.tCampaignSend">
         <MappingFragment StoreEntitySet="tCampaignSend">
+          <ScalarProperty Name="sShorterLink" ColumnName="sShorterLink" />
+          <ScalarProperty Name="idlink" ColumnName="idlink" />
           <ScalarProperty Name="idEnvioEmail" ColumnName="idEnvioEmail" />
           <ScalarProperty Name="idcampaing" ColumnName="idcampaing" />
           <ScalarProperty Name="tEmailtoGroup" ColumnName="tEmailtoGroup" />
@@ -120,6 +122,23 @@
           <ScalarProperty Name="VarName" ColumnName="VarName" />
           <ScalarProperty Name="visible" ColumnName="visible" />
           <ScalarProperty Name="idVar" ColumnName="idVar" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sLinks">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.sLink">
+        <MappingFragment StoreEntitySet="sLinks">
+          <ScalarProperty Name="sShorterLink" ColumnName="sShorterLink" />
+          <ScalarProperty Name="sOriginalLink" ColumnName="sOriginalLink" />
+          <ScalarProperty Name="idlink" ColumnName="idlink" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tSMSCounters">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.tSMSCounter">
+        <MappingFragment StoreEntitySet="tSMSCounter">
+          <ScalarProperty Name="Counter" ColumnName="Counter" />
+          <ScalarProperty Name="idcounter" ColumnName="idcounter" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
