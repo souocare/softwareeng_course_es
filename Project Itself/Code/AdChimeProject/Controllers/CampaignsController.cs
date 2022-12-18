@@ -168,7 +168,7 @@ namespace AdChimeProject.Controllers
             {
                 using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://api-ssl.bitly.com/v4/shorten"))
                 {
-                    request.Headers.TryAddWithoutValidation("Authorization", "Bearer 8e8ad4283419b1cd388dfafe9f3884b3fb90af19");
+                    request.Headers.TryAddWithoutValidation("Authorization", "Bearer AUTHCODE");
 
                     request.Content = new StringContent("{\n  \"long_url\": \"" + link + "\",\n  \"domain\": \"bit.ly\"\n}");
                     request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
