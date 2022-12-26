@@ -132,13 +132,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Core\Repositories\ICampaingSendRepository.cs" />
+    <Compile Include="Core\Repositories\ICampaingsRepository.cs" />
     <Compile Include="Core\Repositories\IRecipientsListsRepository.cs" />
+    <Compile Include="Core\Repositories\ILinksRepository.cs" />
     <Compile Include="Core\Repositories\ITemplateSMSRepository.cs" />
     <Compile Include="Core\Repositories\IContactsVariablesRepository.cs" />
     <Compile Include="Core\Repositories\IVarContactsRepository.cs" />
     <Compile Include="Core\Repositories\IAppUsersRepository.cs" />
     <Compile Include="Core\Repositories\IContactsRepository.cs" />
-    <Compile Include="Core\Repositories\ISMSCounter.cs" />
+    <Compile Include="Core\Repositories\ISMSCounterRepository.cs" />
     <Compile Include="Migrations\202212261222188_changessome.cs" />
     <Compile Include="Migrations\202212261222188_changessome.Designer.cs">
       <DependentUpon>202212261222188_changessome.cs</DependentUpon>
@@ -189,7 +192,10 @@
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Core\Domain\Contacts.cs" />
     <Compile Include="Core\Domain\panelContactsVariable.cs" />
+    <Compile Include="Persistence\Repositories\CampaingSendRepository.cs" />
+    <Compile Include="Persistence\Repositories\CampaingsRepository.cs" />
     <Compile Include="Persistence\Repositories\RecipientsListsRepository.cs" />
+    <Compile Include="Persistence\Repositories\LinksRepository.cs" />
     <Compile Include="Persistence\Repositories\TemplateSMSRepository.cs" />
     <Compile Include="Persistence\Repositories\ContactsVariablesRepository.cs" />
     <Compile Include="Persistence\Repositories\VarContactsRepository.cs" />

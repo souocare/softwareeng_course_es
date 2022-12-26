@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdChimeProject.Core.Repositories
 {
-    public interface ISMSCounter : IRepository<tSMSCounter>
+    public interface ILinksRepository : IRepository<sLink>
     {
-        IEnumerable<tSMSCounter> GetSMSCounter();
+
+        string GetID_ShorterLink(string link);
     }
 }

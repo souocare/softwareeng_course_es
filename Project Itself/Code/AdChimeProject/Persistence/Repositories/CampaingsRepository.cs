@@ -6,18 +6,19 @@ using System.Web;
 
 namespace AdChimeProject.Persistence.Repositories
 {
-    public class SMSCounterRepository : Repository<tSMSCounter>, ISMSCounterRepository
+    public class CampaingsRepository : Repository<Campaings>, ICampaingsRepository
     {
-        public SMSCounterRepository(AdChimeContext context) : base(context)
+        public CampaingsRepository(AdChimeContext context) : base(context)
         {
 
         }
 
-        public IEnumerable<tSMSCounter> GetSMSCounter()
+        public IEnumerable<Campaings> GetAllCampaings()
         {
-            return AdChimeContext.tSMSCounters.Where(c => c.idcounter == 1).ToList();
+            return AdChimeContext.Campaings.OrderByDescending(x => x.updatedate).ToList();
         }
         
+
 
         public AdChimeContext AdChimeContext
         {

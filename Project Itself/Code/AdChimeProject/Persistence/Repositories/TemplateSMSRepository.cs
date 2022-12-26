@@ -15,7 +15,7 @@ namespace AdChimeProject.Persistence.Repositories
 
         public IEnumerable<TemplateSMS> GetAllTemplates()
         {
-            return AdChimeContext.TemplateSMS.OrderByDescending(x => x.updatedate);
+            return AdChimeContext.TemplateSMS.Where(x => x.isaproved == true).OrderByDescending(x => x.updatedate);
         }
 
 

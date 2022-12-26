@@ -201,7 +201,6 @@ namespace AdChimeProject.Controllers
         [HttpPost]
         public ActionResult AddNewField(string nameoffield, string fieldtype)
         {
-            var varcontact = new tVarContact();
 
             _unitOfWork.VarContacts.Add(new tVarContact
             {
@@ -270,12 +269,6 @@ namespace AdChimeProject.Controllers
             }
         }
         
-
-
-
-
-
-
-
+        
     }
 }

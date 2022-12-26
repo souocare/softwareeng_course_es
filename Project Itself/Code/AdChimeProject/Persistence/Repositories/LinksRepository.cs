@@ -6,18 +6,19 @@ using System.Web;
 
 namespace AdChimeProject.Persistence.Repositories
 {
-    public class SMSCounterRepository : Repository<tSMSCounter>, ISMSCounterRepository
+    public class LinksRepository : Repository<sLink>, ILinksRepository
     {
-        public SMSCounterRepository(AdChimeContext context) : base(context)
+        public LinksRepository(AdChimeContext context) : base(context)
         {
 
         }
 
-        public IEnumerable<tSMSCounter> GetSMSCounter()
+
+        public string GetID_ShorterLink(string link)
         {
-            return AdChimeContext.tSMSCounters.Where(c => c.idcounter == 1).ToList();
+            return AdChimeContext.sLinks.Where(x => x.sShorterLink == link).Select(x => x.idlink).FirstOrDefault().ToString();
         }
-        
+
 
         public AdChimeContext AdChimeContext
         {
