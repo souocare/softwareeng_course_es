@@ -1,4 +1,6 @@
-﻿using AdChimeProject.Models;
+﻿using AdChimeProject.Core;
+using AdChimeProject.Models;
+using AdChimeProject.Persistence;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,11 +13,20 @@ using System.Web.Mvc;
 
 namespace AdChimeProject.Controllers
 {
-    
     public class HomeController : Controller
     {
+        protected readonly IUnitOfWork _unitOfWork;
 
-        AdChimeProejctEntities dbadchime = new AdChimeProejctEntities();
+        public HomeController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        public HomeController()
+        {
+            _unitOfWork = new UnitOfWork(new AdChimeContext());
+        }
+
         public static string GetStringSha256Hash(string text)
         {
             if (String.IsNullOrEmpty(text))
@@ -41,33 +52,30 @@ namespace AdChimeProject.Controllers
             return View();
         }
 
-
         [HttpPost]
-        public ActionResult Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel login_model, string returnUrl)
         {
-            var user_check = dbadchime.tUsers.Where(x => x.Email == model.Email).FirstOrDefault();
-            if (user_check == null)
+            var appuser_loggedin = _unitOfWork.AppUsers.GetUser(login_model.Email).FirstOrDefault();
+            if (appuser_loggedin == null)
             {
                 return RedirectToAction("Index", "Home");
             } else
             {
-                var adfsdf = GetStringSha256Hash(model.Password);
-                if ( GetStringSha256Hash(model.Password).ToString() == user_check.Password.ToString())
+                if (GetStringSha256Hash(login_model.Password).ToString() == appuser_loggedin.Password.ToString())
                 {
                     try
                     {
-                        var numerodemsgs = Int32.Parse(dbadchime.tSMSCounters.Where(x => x.idcounter == 1).Select(x => x.Counter).FirstOrDefault().ToString());
-                        Session["valuenow"] = numerodemsgs.ToString();
-                        Session["text"] = numerodemsgs.ToString() + " available SMS's";
-                        if (numerodemsgs / 5000 > 1)
+                        var smscounter = _unitOfWork.SMSCounter.GetSMSCounter().FirstOrDefault().Counter;
+                        Session["valuenow"] = smscounter.ToString();
+                        Session["text"] = smscounter.ToString() + " available SMS's";
+                        if (smscounter / 5000 > 1)
                         {
                             Session["percentage"] = "100%";
-                        } else
-                        {
-                            Session["percentage"] = ((numerodemsgs / 5000) * 100).ToString() + "%";
                         }
-                        
-
+                        else
+                        {
+                            Session["percentage"] = ((smscounter / 5000) * 100).ToString() + "%";
+                        }
                     }
                     catch
                     {
@@ -76,17 +84,35 @@ namespace AdChimeProject.Controllers
                         Session["percentage"] = "100%";
                     }
 
-                    Session["idlogin"] = user_check.iDLogin.ToString();
-                    Session["email"] = user_check.Email.ToString();
-                    Session["isadmin"] = user_check.isadmin.ToString();
-                    Session["Nome"] = user_check.Name.ToString();
+                    Session["idlogin"] = appuser_loggedin.iDLogin.ToString();
+                    Session["email"] = appuser_loggedin.Email.ToString();
+                    Session["isadmin"] = appuser_loggedin.isadmin.ToString();
+                    Session["Nome"] = appuser_loggedin.Name.ToString();
                     return RedirectToAction("MyContacts", "Contacts");
+
                 } else
                 {
                     return RedirectToAction("Index", "Home");
                 }
+                
             }
 
+            
+        }
+
+
+
+        
+        public ActionResult AddCourse()
+        {
+            _unitOfWork.Contacts.Add(new Contacts
+            {
+                Name = "New Course at " + DateTime.Now.ToShortDateString()
+            });
+
+            _unitOfWork.Complete();
+
+            return RedirectToAction("Index");
         }
     }
 }

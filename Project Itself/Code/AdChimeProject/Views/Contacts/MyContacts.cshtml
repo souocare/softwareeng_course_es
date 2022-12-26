@@ -1,7 +1,7 @@
 ﻿@using PagedList.Mvc;
 @using PagedList;
-@using AdChimeProject;
-@model IPagedList<AdChimeProject.panelContact>
+@using AdChimeProject.Core;
+@model IPagedList<IEnumerable<AdChimeProject.Contacts>>
 
 @{ ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml"; }

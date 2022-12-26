@@ -1,4 +1,6 @@
-﻿using PagedList;
+﻿using AdChimeProject.Core;
+using AdChimeProject.Persistence;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,78 +15,18 @@ namespace AdChimeProject.Controllers
     public class ListsController : Controller
     {
 
-        private System.Data.DataTable getxlsData(string filexls, bool isFirstRowHeader)
+        protected readonly IUnitOfWork _unitOfWork;
+        public ListsController(IUnitOfWork unitOfWork)
         {
-            string header = isFirstRowHeader ? "Yes" : "No";
+            _unitOfWork = unitOfWork;
+        }
 
-            System.Data.DataTable _dtreturn = new System.Data.DataTable();
-            DataTable dtSchema;
-            var Sheetnecessaria = "";
-            using (OleDbConnection conn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filexls + ";Extended Properties='Excel 12.0;HDR=" + header + ";IMEX=1;';"))
-            {
-                conn.Open();
-                dtSchema = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
-                Sheetnecessaria = dtSchema.Rows[0].Field<string>("TABLE_NAME").ToString();
-            }
-
-            var connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filexls + ";Extended Properties='Excel 12.0;HDR=Yes;IMEX=1;';";
-
-            var adapter = new OleDbDataAdapter("SELECT * FROM [" + Sheetnecessaria + "] ", connectionString);
-            var ds = new DataSet();
-
-            adapter.Fill(_dtreturn);
-            DataView dv = _dtreturn.DefaultView;
-            _dtreturn = dv.ToTable();
-
-
-            return _dtreturn;
+        public ListsController()
+        {
+            _unitOfWork = new UnitOfWork(new AdChimeContext());
         }
 
 
-        private static DataTable ConvertCSVtoDataTable(string strFilePath, string delimiter)
-        {
-            DataTable dt = new DataTable();
-            using (StreamReader sr = new StreamReader(strFilePath))
-            {
-                char delvalue;
-                if (delimiter == "Semicolon")
-                {
-                    delvalue = ';';
-                }
-                else if (delimiter == "Tab")
-                {
-                    delvalue = '\t';
-                }
-                else
-                {
-                    delvalue = ',';
-                }
-                string[] headers = sr.ReadLine().Split(delvalue);
-                foreach (string header in headers)
-                {
-                    dt.Columns.Add(header);
-                }
-                while (!sr.EndOfStream)
-                {
-                    string[] rows = sr.ReadLine().Split(delvalue);
-                    DataRow dr = dt.NewRow();
-                    for (int i = 0; i < headers.Length; i++)
-                    {
-                        dr[i] = rows[i];
-                    }
-                    dt.Rows.Add(dr);
-                }
-
-            }
-
-
-            return dt;
-        }
-
-
-
-        AdChimeProejctEntities dbadchime = new AdChimeProejctEntities();
-        // GET: Contacts
         public ActionResult MyLists(int? page, string errorname)
         {
             if (errorname == "sim")
@@ -93,9 +35,8 @@ namespace AdChimeProject.Controllers
             }
             ViewBag.Current = "MyLists";
 
-            return View(dbadchime.tRecipientSms.OrderByDescending(x => x.updatedate).ToList().ToPagedList(page ?? 1, 20));
+            return View(_unitOfWork.RecipientsLists.GetRecipientsLists().ToPagedList(page ?? 1, 20));
         }
-
 
         public ActionResult NewList(int? error)
         {
@@ -103,19 +44,18 @@ namespace AdChimeProject.Controllers
             {
                 ViewBag.MsgErroTitle = "sim";
             }
-            
 
-            var listadados = dbadchime.panelContacts.Where(x => x.optinSMS == 1);
+
+            var listadados = _unitOfWork.Contacts.GetContactsWithOptin();
             List<string> systemfields = new List<string>();
             systemfields.Add("Name");
             systemfields.Add("LastName");
             systemfields.Add("CountryCodePhone");
             systemfields.Add("PhoneNumber");
-            systemfields.Add("VeevaID");
             systemfields.Add("Country");
 
 
-            foreach (var field in dbadchime.tVarContacts.Select(x => x.VarName).ToList())
+            foreach (var field in _unitOfWork.VarContacts.GetAllVariableNames())
             {
                 systemfields.Add(field);
             }
@@ -125,23 +65,13 @@ namespace AdChimeProject.Controllers
             ViewBag.Countries = listadados.Select(x => x.Country).Distinct().ToList();
             ViewBag.Nomes = listadados.Select(x => x.Name).Distinct().ToList();
 
-
-
             ViewBag.Current = "MyLists";
             return View();
         }
 
-
-
         [HttpPost]
         public ActionResult NewList(string irecipientetexto)
         {
-            var checkIfAlreadyExists = dbadchime.tRecipientSms.Where(x => x.TitleRecipient == irecipientetexto).ToList();
-            if (checkIfAlreadyExists.Count > 0)
-            {
-                return RedirectToAction("MyLists", new { errorname = "sim" });
-            }
-
 
             ViewBag.Current = "MyLists";
 
@@ -149,13 +79,14 @@ namespace AdChimeProject.Controllers
         }
 
 
+
         public string Addlog(string elementvalue, string idv)
         {
 
-            var listadados = dbadchime.panelContacts.Where(x => x.optinSMS == 1);
+            var listadados = _unitOfWork.Contacts.GetContactsWithOptin();
 
 
-            var getcoltype = dbadchime.tVarContacts.Where(x => x.VarName == elementvalue).Select(x => x.colTypeFilter).FirstOrDefault();
+            var getcoltype = _unitOfWork.VarContacts.GetColType_Variable(elementvalue);
             var hmtltext = "";
             if (getcoltype == null)
             {
@@ -190,7 +121,7 @@ namespace AdChimeProject.Controllers
                 else if (getcoltype == "singleoption")
                 {
                     hmtltext = "<select id=\"systemfields_" + idv.ToString() + "_3\" name=\"systemfields_" + idv.ToString() + "_3\" style=\"width: 100%; \" class=\"form-control select2-multiplethird_mudar\"  > ";
-                    var listadadospaneluser = dbadchime.panelContactsVariables.Where(x => x.panelContact.optinSMS == 1).Where(x => x.tVarContact.VarName == elementvalue).Select(x => x.sValue).Distinct().ToList();
+                    var listadadospaneluser = _unitOfWork.ContactsVariables.GetValues_Variable(elementvalue);
                     foreach (var lis in listadadospaneluser)
                     {
                         hmtltext = hmtltext + " <option value=\"" + lis + "\">" + lis + "</option> ";
@@ -200,7 +131,7 @@ namespace AdChimeProject.Controllers
                 else if (getcoltype == "multipleotpion")
                 {
                     hmtltext = "<select id=\"systemfields_" + idv.ToString() + "_3\" name=\"systemfields_" + idv.ToString() + "_3\" style=\"width: 100%; \" class=\"form-control select2-multiplethird_mudar\" multiple > ";
-                    var listadadospaneluser = dbadchime.panelContactsVariables.Where(x => x.panelContact.optinSMS == 1).Where(x => x.tVarContact.VarName == elementvalue).Select(x => x.sValue).Distinct().ToList();
+                    var listadadospaneluser = _unitOfWork.ContactsVariables.GetValues_Variable(elementvalue);
                     foreach (var lis in listadadospaneluser)
                     {
                         hmtltext = hmtltext + " <option value=\"" + lis + "\">" + lis + "</option> ";
@@ -221,8 +152,6 @@ namespace AdChimeProject.Controllers
             return hmtltext;
 
         }
-
-
 
 
     }

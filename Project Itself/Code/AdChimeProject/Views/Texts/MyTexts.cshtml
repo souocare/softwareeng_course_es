@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<TemplateSMS>
 @{ ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
 
@@ -49,20 +49,13 @@
                     <label for="updatedatedesc">Last Update (descending)</label>
                     <br><br>
 
-                    <div id="listall" style="display:block">
-                        @foreach (var student in ViewBag.Testee)
-                        {
-
-            <a href="/Texts/MyTextSelected/@student[0]" style="border-bottom: 1px solid #E2E7F0; padding-bottom: 5px; padding-right: 90px; padding-left: 10px; color:#0162A2; ">@student[1]</a>
-                            <br /><br />}
-                    </div>
-                    <div id="listactives" style="display:none">
-                        @foreach (var student in ViewBag.Testeev2)
-                        {
-
-            <a href="/Texts/MyTextSelected/@student[0]" style="border-bottom: 1px solid #E2E7F0; padding-bottom: 5px; padding-right: 90px; padding-left: 10px; color:#0162A2; ">@student[1]</a>
-                            <br /><br />}
-                    </div>
+                        <div id="listactives" style="display:none">
+                            @foreach (var template in Model)
+                            {
+                                <a href="/Texts/MyTextSelected/@template.idtemplate" style="border-bottom: 1px solid #E2E7F0; padding-bottom: 5px; padding-right: 90px; padding-left: 10px; color:#0162A2; ">@template.Title</a>
+                                <br /><br />
+                            }
+                        </div>
 
                     <a href="" style="border-bottom: 1px solid #E2E7F0; padding-bottom: 5px; padding-right: 90px; padding-left: 10px; color:#0162A2; ">Accounting Inc</a>
                     <br /><br />

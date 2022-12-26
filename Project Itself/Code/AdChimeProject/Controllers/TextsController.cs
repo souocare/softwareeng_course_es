@@ -1,4 +1,6 @@
-﻿using PagedList;
+﻿using AdChimeProject.Core;
+using AdChimeProject.Persistence;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,116 +16,31 @@ namespace AdChimeProject.Controllers
     public class TextsController : Controller
     {
 
-        private string connectionstringgeral = "Server= localhost; Database= AdChimeProejct; Integrated Security=True;";
-        private System.Data.DataTable getxlsData(string filexls, bool isFirstRowHeader)
+        protected readonly IUnitOfWork _unitOfWork;
+        public TextsController(IUnitOfWork unitOfWork)
         {
-            string header = isFirstRowHeader ? "Yes" : "No";
+            _unitOfWork = unitOfWork;
+        }
 
-            System.Data.DataTable _dtreturn = new System.Data.DataTable();
-            DataTable dtSchema;
-            var Sheetnecessaria = "";
-            using (OleDbConnection conn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filexls + ";Extended Properties='Excel 12.0;HDR=" + header + ";IMEX=1;';"))
-            {
-                conn.Open();
-                dtSchema = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
-                Sheetnecessaria = dtSchema.Rows[0].Field<string>("TABLE_NAME").ToString();
-            }
-
-            var connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filexls + ";Extended Properties='Excel 12.0;HDR=Yes;IMEX=1;';";
-
-            var adapter = new OleDbDataAdapter("SELECT * FROM [" + Sheetnecessaria + "] ", connectionString);
-            var ds = new DataSet();
-
-            adapter.Fill(_dtreturn);
-            DataView dv = _dtreturn.DefaultView;
-            _dtreturn = dv.ToTable();
-
-
-            return _dtreturn;
+        public TextsController()
+        {
+            _unitOfWork = new UnitOfWork(new AdChimeContext());
         }
 
 
-        private static DataTable ConvertCSVtoDataTable(string strFilePath, string delimiter)
-        {
-            DataTable dt = new DataTable();
-            using (StreamReader sr = new StreamReader(strFilePath))
-            {
-                char delvalue;
-                if (delimiter == "Semicolon")
-                {
-                    delvalue = ';';
-                }
-                else if (delimiter == "Tab")
-                {
-                    delvalue = '\t';
-                }
-                else
-                {
-                    delvalue = ',';
-                }
-                string[] headers = sr.ReadLine().Split(delvalue);
-                foreach (string header in headers)
-                {
-                    dt.Columns.Add(header);
-                }
-                while (!sr.EndOfStream)
-                {
-                    string[] rows = sr.ReadLine().Split(delvalue);
-                    DataRow dr = dt.NewRow();
-                    for (int i = 0; i < headers.Length; i++)
-                    {
-                        dr[i] = rows[i];
-                    }
-                    dt.Rows.Add(dr);
-                }
-
-            }
-
-
-            return dt;
-        }
-
-
-
-        AdChimeProejctEntities dbadchime = new AdChimeProejctEntities();
-        // GET: Contacts
         public ActionResult MyTexts()
         {
             if (Session["email"] != null)
             {
-                ViewBag.Current = "MyTexts";
-
-                var modelo = dbadchime.tTemplateSms.OrderBy(x => x.idtemplate).ToList();
-                List<List<string>> list = new List<List<string>>();
-                foreach (var model in modelo)
-                {
-                    List<string> listamodl = new List<string>();
-                    listamodl.Add(model.idtemplate.ToString());
-                    listamodl.Add(model.Title.ToString());
-
-                    list.Add(listamodl);
-                };
-                ViewBag.Testee = list;
-
-                var modelv2 = dbadchime.tTemplateSms.OrderByDescending(x => x.updatedate).ToList();
-                List<List<string>> listv2 = new List<List<string>>();
-                foreach (var model in modelv2)
-                {
-                    List<string> listamodl = new List<string>();
-                    listamodl.Add(model.idtemplate.ToString());
-                    listamodl.Add(model.Title.ToString());
-
-                    listv2.Add(listamodl);
-                };
-                ViewBag.Testeev2 = listv2;
-
-                return View();
-            } else
+                var all_templatesSMs = _unitOfWork.TemplateSMS.GetAllTemplates();
+                return View(all_templatesSMs);
+            }
+            else
             {
                 return RedirectToAction("Login", "Home");
             }
-            
         }
+
 
         public ActionResult MyTextSelected(int id)
         {
@@ -131,31 +48,20 @@ namespace AdChimeProject.Controllers
             {
                 ViewBag.Current = "MyTexts";
 
-                var modelo = dbadchime.tTemplateSms.OrderBy(x => x.idtemplate).ToList();
-                List<List<string>> list = new List<List<string>>();
-                foreach (var model in modelo)
+                var all_templatesSMs = _unitOfWork.TemplateSMS.GetAllTemplates();
+                List<List<string>> all_templatesSMs_list = new List<List<string>>();
+                foreach (var template in all_templatesSMs)
                 {
-                    List<string> listamodl = new List<string>();
-                    listamodl.Add(model.idtemplate.ToString());
-                    listamodl.Add(model.Title.ToString());
+                    List<string> lista_template = new List<string>();
+                    lista_template.Add(template.idtemplate.ToString());
+                    lista_template.Add(template.Title.ToString());
 
-                    list.Add(listamodl);
+                    all_templatesSMs_list.Add(lista_template);
                 };
-                ViewBag.Testee = list;
+                ViewBag.AllTemplates = all_templatesSMs_list;
 
-                var modelv2 = dbadchime.tTemplateSms.OrderByDescending(x => x.updatedate).ToList();
-                List<List<string>> listv2 = new List<List<string>>();
-                foreach (var model in modelv2)
-                {
-                    List<string> listamodl = new List<string>();
-                    listamodl.Add(model.idtemplate.ToString());
-                    listamodl.Add(model.Title.ToString());
 
-                    listv2.Add(listamodl);
-                };
-                ViewBag.Testeev2 = listv2;
-
-                var modelselected = dbadchime.tTemplateSms.Where(x => x.idtemplate == id).First();
+                var modelselected = _unitOfWork.TemplateSMS.GetTemplateInfo(id);
 
 
                 return View(modelselected);
@@ -164,60 +70,44 @@ namespace AdChimeProject.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-
-
-            
         }
 
+
         [HttpPost]
-        public ActionResult MyTextSelected(tTemplateSm modeltemplatesms)
+        public ActionResult MyTextSelected(TemplateSMS modeltemplatesms)
         {
             ViewBag.Current = "MyTexts";
-            using (SqlConnection connection = new SqlConnection(connectionstringgeral))
+
+            _unitOfWork.TemplateSMS.Add(new TemplateSMS
             {
-                connection.Open();
+                Title = modeltemplatesms.Title,
+                Text = modeltemplatesms.Text,
 
-                SqlCommand commandcheck = new SqlCommand("UPDATE [dbo].[tTemplateSms] SET [Title] = @title, [Text] = @text, " +
-                        " [isaproved] = @isaproved,  [updatedate] = @updatedate,  " +
-                        " [updatedbyuser] = @updatebyuser WHERE [idtemplate] = @idtemplate", connection);
-                commandcheck.Parameters.AddWithValue("@title", modeltemplatesms.Title.ToString());
-                commandcheck.Parameters.AddWithValue("@text", modeltemplatesms.Text.ToString());
-                commandcheck.Parameters.AddWithValue("@isaproved", modeltemplatesms.isaproved);
-                commandcheck.Parameters.AddWithValue("@updatedate", DateTime.Now);
-                commandcheck.Parameters.AddWithValue("@updatebyuser", User.Identity.Name.ToString());
-                commandcheck.Parameters.AddWithValue("@idtemplate", modeltemplatesms.idtemplate.ToString());
+                isaproved = modeltemplatesms.isaproved,
+                updatedate = modeltemplatesms.updatedate,
+                updatedbyuser = Session["Nome"].ToString(),
+                idtemplate = modeltemplatesms.idtemplate,
+            });
 
-                commandcheck.ExecuteNonQuery();
-                connection.Close();
+            _unitOfWork.Complete();
+            
 
-            };
-
-            var modelo = dbadchime.tTemplateSms.OrderBy(x => x.idtemplate).ToList();
-            List<List<string>> list = new List<List<string>>();
-            foreach (var model in modelo)
+            var all_templatesSMs = _unitOfWork.TemplateSMS.GetAllTemplates();
+            List<List<string>> all_templatesSMs_list = new List<List<string>>();
+            foreach (var template in all_templatesSMs)
             {
-                List<string> listamodl = new List<string>();
-                listamodl.Add(model.idtemplate.ToString());
-                listamodl.Add(model.Title.ToString());
+                List<string> lista_template = new List<string>();
+                lista_template.Add(template.idtemplate.ToString());
+                lista_template.Add(template.Title.ToString());
 
-                list.Add(listamodl);
+                all_templatesSMs_list.Add(lista_template);
             };
-            ViewBag.Testee = list;
-
-            var modelv2 = dbadchime.tTemplateSms.OrderByDescending(x => x.updatedate).ToList();
-            List<List<string>> listv2 = new List<List<string>>();
-            foreach (var model in modelv2)
-            {
-                List<string> listamodl = new List<string>();
-                listamodl.Add(model.idtemplate.ToString());
-                listamodl.Add(model.Title.ToString());
-
-                listv2.Add(listamodl);
-            };
-            ViewBag.Testeev2 = listv2;
+            ViewBag.AllTemplates = all_templatesSMs_list;
 
 
-            var modelselected = dbadchime.tTemplateSms.Where(x => x.idtemplate == modeltemplatesms.idtemplate).First();
+            var modelselected = _unitOfWork.TemplateSMS.GetTemplateInfo(modeltemplatesms.idtemplate);
+
+
             return View(modelselected);
         }
 
@@ -230,7 +120,8 @@ namespace AdChimeProject.Controllers
                 {
                     ViewBag.Current = "MyTexts";
                     return View();
-                } else
+                }
+                else
                 {
                     return RedirectToAction("MyTexts");
                 }
@@ -239,7 +130,7 @@ namespace AdChimeProject.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            
+
         }
 
         [HttpPost]

@@ -87,8 +87,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tTemplateSms">
-      <EntityTypeMapping TypeName="AdChimeProejctModel.tTemplateSm">
+    <EntitySetMapping Name="TemplateSMS">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.TemplateSMS">
         <MappingFragment StoreEntitySet="tTemplateSms">
           <ScalarProperty Name="idtemplate" ColumnName="idtemplate" />
           <ScalarProperty Name="Title" ColumnName="Title" />
@@ -100,8 +100,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tUsers">
-      <EntityTypeMapping TypeName="AdChimeProejctModel.tUser">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="AdChimeProejctModel.Users">
         <MappingFragment StoreEntitySet="tUsers">
           <ScalarProperty Name="isadmin" ColumnName="isadmin" />
           <ScalarProperty Name="iDLogin" ColumnName="iDLogin" />

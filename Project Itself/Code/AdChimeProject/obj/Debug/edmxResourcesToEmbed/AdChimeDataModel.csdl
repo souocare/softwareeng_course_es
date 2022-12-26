@@ -94,7 +94,7 @@
     <NavigationProperty Name="tCampaignSends" Relationship="Self.FK_tCampaignSend_tRecipientSms" FromRole="tRecipientSms" ToRole="tCampaignSend" />
     <NavigationProperty Name="tRecipientNumbers" Relationship="Self.FK_tRecipientNumbers_tRecipientSms" FromRole="tRecipientSms" ToRole="tRecipientNumbers" />
   </EntityType>
-  <EntityType Name="tTemplateSm">
+  <EntityType Name="TemplateSMS">
     <Key>
       <PropertyRef Name="idtemplate" />
     </Key>
@@ -144,7 +144,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tCampaign_tTemplateSms">
-    <End Role="tTemplateSms" Type="Self.tTemplateSm" Multiplicity="0..1" />
+    <End Role="tTemplateSms" Type="AdChimeProejctModel.TemplateSMS" Multiplicity="0..1" />
     <End Role="tCampaign" Type="Self.tCampaign" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tTemplateSms">
@@ -198,7 +198,7 @@
     <EntitySet Name="tCampaignSends" EntityType="Self.tCampaignSend" />
     <EntitySet Name="tRecipientNumbers" EntityType="Self.tRecipientNumber" />
     <EntitySet Name="tRecipientSms" EntityType="Self.tRecipientSm" />
-    <EntitySet Name="tTemplateSms" EntityType="Self.tTemplateSm" />
+    <EntitySet Name="TemplateSMS" EntityType="AdChimeProejctModel.TemplateSMS" />
     <AssociationSet Name="FK_panelContactsVariables_panelContacts" Association="Self.FK_panelContactsVariables_panelContacts">
       <End Role="panelContacts" EntitySet="panelContacts" />
       <End Role="panelContactsVariables" EntitySet="panelContactsVariables" />
@@ -212,7 +212,7 @@
       <End Role="tCampaign" EntitySet="tCampaigns" />
     </AssociationSet>
     <AssociationSet Name="FK_tCampaign_tTemplateSms" Association="Self.FK_tCampaign_tTemplateSms">
-      <End Role="tTemplateSms" EntitySet="tTemplateSms" />
+      <End Role="tTemplateSms" EntitySet="TemplateSMS" />
       <End Role="tCampaign" EntitySet="tCampaigns" />
     </AssociationSet>
     <AssociationSet Name="FK_tCampaignSend_tCampaign" Association="Self.FK_tCampaignSend_tCampaign">
@@ -227,7 +227,7 @@
       <End Role="tRecipientSms" EntitySet="tRecipientSms" />
       <End Role="tRecipientNumbers" EntitySet="tRecipientNumbers" />
     </AssociationSet>
-    <EntitySet Name="tUsers" EntityType="AdChimeProejctModel.tUser" />
+    <EntitySet Name="Users" EntityType="AdChimeProejctModel.Users" />
     <EntitySet Name="tVarContacts" EntityType="AdChimeProejctModel.tVarContact" />
     <AssociationSet Name="FK_panelContactsVariables_tVarContacts" Association="AdChimeProejctModel.FK_panelContactsVariables_tVarContacts">
       <End Role="tVarContact" EntitySet="tVarContacts" />
@@ -236,7 +236,7 @@
     <EntitySet Name="sLinks" EntityType="AdChimeProejctModel.sLink" />
     <EntitySet Name="tSMSCounters" EntityType="AdChimeProejctModel.tSMSCounter" />
   </EntityContainer>
-  <EntityType Name="tUser">
+  <EntityType Name="Users">
     <Key>
       <PropertyRef Name="idUser" />
     </Key>
